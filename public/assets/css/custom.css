@@ -1,0 +1,80 @@
+.min-250 {
+  min-height: 250px;
+}
+.background-home {
+  background-image: url("../frontend/image/Palm.png");
+  opacity: 0.2;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.swal2-popup {
+  border-radius: 18px;
+}
+
+button.swal2-confirm.swal2-styled {
+  background-color: #252525;
+  color: yellow;
+}
+
+.btn.btn-primary {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+/*
+.btn.btn-primary i, .btn.btn-primary .svg-icon {
+    color: yellow
+}
+
+.btn.btn-primary:hover:not(.btn-active) {
+    color: yellow;
+    border-color: var(--kt-primary-active);
+    background-color: black !important;
+} */
+
+a.menu-link.active:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 40px;
+  background-color: #000000;
+  border-radius: 12px;
+}
+
+[data-kt-app-layout="light-sidebar"]
+  .app-sidebar
+  .menu
+  .menu-item
+  .menu-link.active {
+  background-color: inherit;
+}
+[data-kt-app-layout="light-sidebar"]
+  .app-sidebar
+  .menu
+  .menu-item
+  .menu-link.active
+  span.menu-icon,
+[data-kt-app-layout="light-sidebar"]
+  .app-sidebar
+  .menu
+  .menu-item
+  .menu-link.active
+  span.menu-icon
+  .svg-icon,
+[data-kt-app-layout="light-sidebar"]
+  .app-sidebar
+  .menu
+  .menu-item
+  .menu-link.active
+  span.menu-title {
+  color: #151515;
+}
+
+.min-height-200 {
+  min-height: 200px;
+}

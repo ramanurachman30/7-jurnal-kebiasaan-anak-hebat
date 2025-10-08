@@ -1,0 +1,332 @@
+@font-face {
+    font-family: 'icon-web-ppid_sync';
+    src:  url('./icon-web-ppid_sync.eot');
+    src:  url('./icon-web-ppid_sync.eot') format('embedded-opentype'),
+      url('./icon-web-ppid_sync.ttf') format('truetype'),
+      url('./icon-web-ppid_sync.woff') format('woff'),
+      url('./icon-web-ppid_sync.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+  }
+  
+  [class^="icon-ol"], [class*=" icon-ol"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icon-web-ppid_sync' !important;
+    speak: never;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+  
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  .icon-olsearch:before {
+    content: "\e95b";
+  }
+  .icon-olmenu:before {
+    content: "\e95a";
+  }
+  .icon-olagriculture:before {
+    content: "\e941";
+  }
+  .icon-olannouncements:before {
+    content: "\e942";
+  }
+  .icon-olcamera:before {
+    content: "\e943";
+  }
+  .icon-olcut:before {
+    content: "\e944";
+  }
+  .icon-olemail:before {
+    content: "\e945";
+  }
+  .icon-olenergy:before {
+    content: "\e946";
+  }
+  .icon-oleselon-1:before {
+    content: "\e947";
+  }
+  .icon-olevents:before {
+    content: "\e948";
+  }
+  .icon-olgallaries:before {
+    content: "\e949";
+  }
+  .icon-olhistory:before {
+    content: "\e94a";
+  }
+  .icon-olinfrastructure:before {
+    content: "\e94b";
+  }
+  .icon-ollifestyle:before {
+    content: "\e94c";
+  }
+  .icon-olmagazine:before {
+    content: "\e94d";
+  }
+  .icon-olmanufacturing:before {
+    content: "\e94e";
+  }
+  .icon-olmap:before {
+    content: "\e94f";
+  }
+  .icon-olminister:before {
+    content: "\e950";
+  }
+  .icon-olnews-pile:before {
+    content: "\e951";
+  }
+  .icon-olnews1:before {
+    content: "\e952";
+  }
+  .icon-olnews2:before {
+    content: "\e953";
+  }
+  .icon-olpalm:before {
+    content: "\e954";
+  }
+  .icon-olprofile:before {
+    content: "\e955";
+  }
+  .icon-olshrimp:before {
+    content: "\e956";
+  }
+  .icon-olstructure:before {
+    content: "\e957";
+  }
+  .icon-oltechnology:before {
+    content: "\e958";
+  }
+  .icon-oltourism:before {
+    content: "\e959";
+  }
+  .icon-olfacebook:before {
+    content: "\e93b";
+  }
+  .icon-olinstagram:before {
+    content: "\e93c";
+  }
+  .icon-ollinkedin:before {
+    content: "\e93d";
+  }
+  .icon-olnswi:before {
+    content: "\e93e";
+  }
+  .icon-oltwitter:before {
+    content: "\e93f";
+  }
+  .icon-olyoutube:before {
+    content: "\e940";
+  }
+  .icon-olantenna:before {
+    content: "\e913";
+  }
+  .icon-olbeach:before {
+    content: "\e914";
+  }
+  .icon-olbridge:before {
+    content: "\e915";
+  }
+  .icon-olbus-electric:before {
+    content: "\e916";
+  }
+  .icon-olcar-electric:before {
+    content: "\e917";
+  }
+  .icon-olcompost:before {
+    content: "\e918";
+  }
+  .icon-olconstruction:before {
+    content: "\e919";
+  }
+  .icon-oldatabase:before {
+    content: "\e91a";
+  }
+  .icon-oldoctor:before {
+    content: "\e91b";
+  }
+  .icon-olelectric-switch:before {
+    content: "\e91c";
+  }
+  .icon-olface-mask:before {
+    content: "\e91d";
+  }
+  .icon-olflask-round-bottom-outline:before {
+    content: "\e91e";
+  }
+  .icon-olflask-round-bottom:before {
+    content: "\e91f";
+  }
+  .icon-olflask:before {
+    content: "\e920";
+  }
+  .icon-olgas-cylinder:before {
+    content: "\e921";
+  }
+  .icon-olgas-station:before {
+    content: "\e922";
+  }
+  .icon-olheavy-metal:before {
+    content: "\e923";
+  }
+  .icon-olhuman-greeting:before {
+    content: "\e924";
+  }
+  .icon-olleaf:before {
+    content: "\e925";
+  }
+  .icon-olmachine:before {
+    content: "\e926";
+  }
+  .icon-olmedical-bag:before {
+    content: "\e927";
+  }
+  .icon-olmining-helm:before {
+    content: "\e928";
+  }
+  .icon-olmining:before {
+    content: "\e929";
+  }
+  .icon-olmonitor-shimmer:before {
+    content: "\e92a";
+  }
+  .icon-olmoped-electric:before {
+    content: "\e92b";
+  }
+  .icon-olpier:before {
+    content: "\e92c";
+  }
+  .icon-olplane:before {
+    content: "\e92d";
+  }
+  .icon-olprocessor:before {
+    content: "\e92e";
+  }
+  .icon-olrefinery:before {
+    content: "\e92f";
+  }
+  .icon-olrickshaw-electric:before {
+    content: "\e930";
+  }
+  .icon-olrobot-industrial:before {
+    content: "\e931";
+  }
+  .icon-olsattelite:before {
+    content: "\e932";
+  }
+  .icon-olscooter-electric:before {
+    content: "\e933";
+  }
+  .icon-olship:before {
+    content: "\e934";
+  }
+  .icon-olsolar-power-variant:before {
+    content: "\e935";
+  }
+  .icon-olstethoscope:before {
+    content: "\e936";
+  }
+  .icon-oltest-tube:before {
+    content: "\e937";
+  }
+  .icon-oltrain:before {
+    content: "\e938";
+  }
+  .icon-oltree:before {
+    content: "\e939";
+  }
+  .icon-olxray:before {
+    content: "\e93a";
+  }
+  .icon-oldocument:before {
+    content: "\e90b";
+  }
+  .icon-olgeneral:before {
+    content: "\e90c";
+  }
+  .icon-olimage:before {
+    content: "\e90d";
+  }
+  .icon-olpdf:before {
+    content: "\e90e";
+  }
+  .icon-olpresentation:before {
+    content: "\e90f";
+  }
+  .icon-olspreadsheet:before {
+    content: "\e910";
+  }
+  .icon-oltext:before {
+    content: "\e911";
+  }
+  .icon-olzip:before {
+    content: "\e912";
+  }
+  .icon-olarrow:before {
+    content: "\e900";
+  }
+  .icon-olclose:before {
+    content: "\e901";
+  }
+  .icon-oldown:before {
+    content: "\e902";
+  }
+  .icon-oldownload:before {
+    content: "\e903";
+  }
+  .icon-olend:before {
+    content: "\e904";
+  }
+  .icon-olnew-window:before {
+    content: "\e905";
+  }
+  .icon-olnext:before {
+    content: "\e906";
+  }
+  .icon-olplay:before {
+    content: "\e907";
+  }
+  .icon-olprev:before {
+    content: "\e908";
+  }
+  .icon-olstart:before {
+    content: "\e909";
+  }
+  .icon-olview:before {
+    content: "\e90a";
+  }
+  
+  .icon-xxxhdpi {
+      text-align: center;
+      font-size: 192px;
+  }
+  .icon-xxhdpi {
+      text-align: center;
+      font-size: 144px;
+  }
+  .icon-xhdpi {
+      text-align: center;
+      font-size: 96px;
+  }
+  .icon-hdpi {
+      text-align: center;
+      font-size: 72px;
+  }
+  .icon-mdpi {
+      text-align: center;
+      font-size: 48px;
+  }
+  .icon-ldpi {
+      text-align: center;
+      font-size: 36px;
+  }
+  .icon-sdpi {
+      text-align: center;
+      font-size: 24px;
+  }

@@ -1,0 +1,49 @@
+<header class="p-0 container-fluid">
+  <nav class="navbar navbar-expand-lg navbar-for-blur w-100">
+    <div class="px-5 container-fluid d-flex justify-content-between">
+      <a class="navbar-brand" href="#">
+        <img src="{{asset('assets/media/sync-indonesia-assets/LogoSyncTrans 4.png')}}" alt="logo MPK" class="logo-nav">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+        <ul class="gap-4 mb-2 navbar-nav align-items-none align-items-md-center mb-lg-0">
+          <li class="nav-item">
+            <a class="text-white fs-14 nav-link {{request()->routeIs('/') ? 'active' : ''}}" href="{{route('home.page')}}">
+              Home
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="text-white fs-14 nav-link {{request()->routeIs('aboutUsPage') ? 'active' : ''}}" href="{{route('aboutUsPage')}}">About Us</a>
+            
+          </li>
+          <li class="nav-item">
+            <a class="text-white fs-14 nav-link {{request()->routeIs('products') ? 'active' : ''}}" href="{{route('products')}}">Products</a>
+          </li>
+          <li class="nav-item">
+            <a class="text-white fs-14 nav-link {{request()->routeIs('contactus') ? 'active' : ''}}" href="{{route('contactus')}}">Contact Us</a>
+          </li>
+          <li class="nav-item">
+            <a class="text-white fs-14 nav-link {{request()->routeIs('newsNEvents') ? 'active' : ''}}" href="{{route('newsNEvents')}}">News & Events</a>
+          </li>
+        </ul>
+        {{-- Search button toggle
+        <button class="btn" type="button" id="searchToggle">
+          <svg width="31" height="31" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <rect x="0.245117" y="0.197014" width="40.1656" height="40.1657" fill="url(#pattern0_7_9)"/>
+            <defs>
+            <pattern id="pattern0_7_9" patternContentUnits="objectBoundingBox" width="1" height="1">
+            <use xlink:href="#image0_7_9" transform="scale(0.0111111)"/>
+            </pattern>
+            <image id="image0_7_9" width="90" height="90" preserveAspectRatio="none" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAABaCAYAAAA4qEECAAAACXBIWXMAAAsTAAALEwEAmpwYAAAFhElEQVR4nO2cz48URRTHnyau8uug4K+rIXqQaKKiaDRyIKCJBvTvYIGb4skYE72Iy6JXQ/AHsIkxmECMMaBEVDgrePEHBJkd2iVd31cTZYlb5LG1ZjN2dc+Ms11VPfVJOtnMzva8/u6bV69evSqiRCKRSCQSiUQikUj8l1artUJrvQXAbgD7mfkHZv6Fma8AuCqX/Gxf+17eI+/VWm82xiwvuGViAWa+i5l3MfNJK6QZ5LJ/e5KZd8o9//2AUQfAM8x8BMC1QcUtEX3W3vtpGlUAPMvM3wxb3JLra/mn0qigtb4HwAEAczWKvPiaYua7qckAeNkOYsbzdQXANmoaxpgxAHv78WIAlwB8zMzjkk3keb42z/PbjTG3yCU/y2vyO2beIe8F0Orj/nMA3pV7URNot9srAXzZowCXAUx0Op1HB/28TqfzmPxTmTnrUfAvxEaKGaXUagBnenjY88y83RizbFifLfeSbwOACz0IflpspRiRiQMzf1ch8Kx431J6lBX8dQB/V9hyJjrPtjG5Klz8xMwP1mUTM69j5rNVYSSqmG1jZNkDHfQxVW61Witseldm2x6KAaXUi2XZBYD3jDE3+7LPGHMTgHcqspGXKPTJSFmeDGCSAgHAvhLPngm6TgLgw4pw4c2TuxFbysKIVAQp1NqFK2QA+DHE8mW73V7JzOdKQkh4xShXgcimVbVlF/3CzA+5yrIAjlNIKKWeLIl3b1DgMPNbJSEkHK+Wmq9rxjfM2d5Spn0ALjrE/oxCQEZnW2AvMnI7RQLPr+64Zq93BmugFIhi8OaukoGrEDVOvrHrc0WeMEGRAWDS8SwnQohthSO21voRioxOp7PelTl5/XbaonuRYZcoQsz89HzaET42eTMMwGsOoT+iSAFw0PFMr/g0an+wg8eA2H6Qomf6gHwhXUKO+LyZIkVr/ZxD6FPejGLm34qMyvP8PoqUPM/XOoT+1ZtRtpxYJPQdFClKqdUOoTNvRrlSO1nKokgxxoy5UjxvRjVU6FsdQl/1ZlQTQweANY7QMePNqFEaDAGcDzG920KRorV+3uHR34Y4YdlBkcLucukBb0bJdgaHUZ9QpAA45Him3d6MkhDhMGpaCjTUrKLSRp+GLXeleNLVSZGhlHrC4TizUhIOtfC/lyIDjqYaAF+FXO26HGIvR8VS1p/Brn1WLM6ON2FxVmt9LwXebnAhBq9uzS/J/eF4hsMUCtJk4vBoud6kwGHmt6NooBFkH19JS9g6ChSt9cMlLWH+B8FuZLNkSV/0We/pUQFZlq1i5p8dIs8ppTZQiMg0tSSETAXYtvtpdG27guxIrWhE30eBwMzvlzhFJuVSChml1AsN2FqxjWJAdqSWeMuNMOJjq1k2H5Od4SKqzUKCbCGTrWQVYp+TJvA6swvXwNcl9FFZzqLIprSnetnQmWXZqiW2o3JDZ8F+w9sosqX70z082EWpmQxzFmkF3uWa8TXOs+2m+6owYhaN9pN5nj8+SD1b/kZKnbYK5yoQNVdsG7P39HmMxLRtONwpbVpKqfvtMRJjcslKu1LqAdvCJZ57CEC7j/vPWZuONkpsAcBWV4sC13vJN2er2CQiNlJs8UR7SMo/nkSe6t6TYruTjjRqgFxAqmIAjtclsBSIymoXjfXsBZRST8kWs5LFg/8jrqSPh3stdTZe7EWtWHJizIl+ct4CIa6J98ry0yArIyMhdtepMZsAvCqd9vYkGzkec8YemTlrT/r6XTqI7PFu0mOycRjl2B7FPtYIsX3T6AEyNJLY9Yv9eRK7BpLYNZLErpEkdo3Y1O9YSv3CETu60x1iFZtj7BGPTmwAf4XUx9Jksf1t0m+42BMSLsSTReToTu6NCYnJKS4nEolEIpFIJBK05FwHewWDvm8tKiwAAAAASUVORK5CYII="/>
+            </defs>
+            </svg>          
+        </button> --}}
+      </div>
+
+      
+    </div>
+  </nav>
+</header>

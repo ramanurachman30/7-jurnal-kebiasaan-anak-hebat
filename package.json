@@ -1,0 +1,44 @@
+{
+    "private": true,
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "test": "gulp"
+    },
+    "devDependencies": {
+        "alpinejs": "^3.4.2",
+        "autoprefixer": "^10.4.2",
+        "axios": "^0.27",
+        "browser-sync": "^2.27.10",
+        "gulp": "^4.0.2",
+        "gulp-autoprefixer": "^8.0.0",
+        "gulp-concat": "^2.6.1",
+        "gulp-connect-php": "^1.0.3",
+        "gulp-htmlmin": "^5.0.1",
+        "gulp-postcss": "^9.0.1",
+        "gulp-sass": "^5.1.0",
+        "gulp-sourcemaps": "^3.0.0",
+        "gulp-svgmin": "^4.1.0",
+        "gulp-webp": "^4.0.1",
+        "laravel-vite-plugin": "^2.0.0",
+        "lodash": "^4.17.19",
+        "postcss": "^8.4.6",
+        "sass": "^1.89.2",
+        "sass-loader": "^16.0.5",
+        "tailwindcss": "^4.1.10",
+        "vite": "^7.0.5",
+        "webpack-stream": "^7.0.0"
+    },
+    "dependencies": {
+        "@barba/core": "^2.9.7",
+        "@tailwindcss/vite": "^4.1.11",
+        "gsap": "^3.11.3",
+        "normalize.css": "^8.0.1",
+        "quill-image-resize-module": "^3.0.0"
+    },
+    "browserslist": [
+        "last 100 version",
+        "> 100%",
+        "IE 10"
+    ]
+}

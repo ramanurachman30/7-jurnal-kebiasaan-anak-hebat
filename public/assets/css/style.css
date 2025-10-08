@@ -1,0 +1,441 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+:root {
+  --neon-blue:#1400A9;
+  --white:#ffff;
+  --dark:#151515;
+}
+
+* {
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background-color: #f5f5f5 !important;
+}
+
+.bg-neon-blue {
+  background-color: var(--neon-blue);
+}
+
+.bg-gradient-neon {
+  background: linear-gradient(rgba(255, 255, 255, 0), #1400A9);
+}
+
+.bg-no-repeat {
+  background-repeat: no-repeat;
+}
+
+.bg-cover {
+  background-size: cover;
+}
+
+.fs-48 {
+  font-size: 48px !important;
+}
+
+.fs-42 {
+  font-size: 42px !important;
+}
+
+.fs-36 {
+  font-size: 36px !important;
+}
+
+.fs-32 {
+  font-size: 32px !important;
+}
+
+.fs-24 {
+  font-size: 24px !important;
+}
+
+.fs-22 {
+  font-size: 22px !important;
+}
+
+.fs-20 {
+  font-size: 20px !important;
+}
+
+.fs-18 {
+  font-size: 18px !important;
+}
+
+.fs-16 {
+  font-size: 16px !important;
+}
+
+.fs-14 {
+  font-size: 14px !important;
+}
+
+.fs-12 {
+  font-size: 12px !important;
+}
+
+.text-neon {
+  color: #110094;
+}
+
+.btn-light-neon {
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 12px 18px;
+  background-color: white;
+  border-radius: 4px;
+  color: #1400A9;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.btn-light-neon:hover {
+  background-color: #e5e5e5;
+}
+
+.btn-neon {
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 12px 18px;
+  background-color: #1400A9;
+  border-radius: 4px;
+  color: white;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.btn-neon:hover {
+  background-color: #110094;
+}
+
+.btn-outline-neon {
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 12px 18px;
+  border: 1px solid #1400A9;
+  border-radius: 4px;
+  color: #1400A9;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.btn-outline-neon:hover {
+  background-color: #1400A9;
+  color: white !important;
+}
+
+.btn-outline-light {
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 12px 18px;
+  border: 1px solid white;
+  border-radius: 4px;
+  color: white;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.btn-outline-light:hover {
+  background-color: white;
+  color: #1400A9 !important;
+}
+
+.border-neon-bottom-white {
+  border-bottom: 2px solid white;
+}
+
+.border-neon-bottom {
+  border-bottom: 2px solid #1400A9;
+}
+
+.w-fit-content {
+  width: -moz-fit-content !important;
+  width: fit-content !important;
+}
+
+.object-cover {
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.object-contain {
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
+.text-justify {
+  text-align: justify;
+}
+
+.chat-wa {
+  position: fixed;
+  right: 60px;
+  bottom: 30px;
+  background-color: #25D366;
+  z-index: 9999;
+}
+
+.img-not-found {
+  width: 700px;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+  z-index: 9999;
+}
+header .logo-nav {
+  width: 130px;
+}
+header ul li a {
+  color: #1400A9 !important;
+}
+header ul li a.active {
+  font-weight: 600;
+}
+
+section {
+  padding: 60px 0;
+}
+section#section-top {
+  height: 750px;
+  padding-top: 150px;
+  padding-bottom: 60px;
+}
+section#section-hero {
+  height: 400px;
+  padding-top: 150px;
+  padding-bottom: 60px;
+}
+section#home-about .img-home-about {
+  width: 550px;
+  height: 350px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+section#home-service .card-layanan {
+  background-color: white;
+  width: 250px;
+  height: 250px;
+  padding: 24px 18px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 8px rgba(21, 21, 21, 0.1254901961);
+  transition: transform 0.2s;
+}
+section#home-service .card-layanan .svg-layanan {
+  width: 100px;
+  height: 100px;
+}
+section#home-service .card-layanan:hover {
+  transform: scale(1.2);
+}
+section#home-testi .card-testi {
+  background-color: white;
+  width: 300px;
+  min-height: 250px;
+  max-height: -moz-fit-content;
+  max-height: fit-content;
+  padding: 24px 18px;
+}
+section#home-testi .card-testi img {
+  width: 70px;
+  height: 70px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+section#home-partner .img-partner {
+  width: 180px;
+}
+section#about-vision .card-visi, section#about-vision .card-misi {
+  padding: 24px 18px;
+  box-shadow: 0px 2px 8px rgba(21, 21, 21, 0.1254901961);
+}
+section#img-company .img-teams {
+  width: 100%;
+  height: 400px;
+}
+section#service .card-service {
+  background-color: white;
+  padding: 24px 18px;
+  width: 100%;
+  min-height: 250px;
+  max-height: -moz-fit-content;
+  max-height: fit-content;
+  box-shadow: 0px 2px 8px rgba(21, 21, 21, 0.1254901961);
+  color: #151515;
+  transition: transform 0.2s;
+}
+section#service .card-service img {
+  width: 100px;
+  height: 100px;
+}
+section#service .card-service:hover {
+  transform: scale(1.2);
+}
+section#event-update .img-update {
+  width: 400px;
+  height: 300px;
+}
+section#contact .card-contact {
+  width: 100%;
+  height: 180px;
+  padding: 24px 18px;
+}
+section#maps .card-maps {
+  width: 100%;
+  height: 600px;
+}
+
+footer .logo-footer {
+  width: 150px;
+}
+
+.slider {
+  position: relative;
+  width: 100%;
+  height: 750px;
+  overflow: hidden;
+}
+.slider .slides {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  animation: slide 12s infinite ease-in-out;
+}
+.slider .slides .slide {
+  width: 100%;
+  height: 100%;
+  flex-shrink: 0;
+}
+.slider .slides .slide img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+@keyframes slide {
+  0% {
+    transform: translateX(0);
+  } /* Slide 1 appears */
+  25% {
+    transform: translateX(0);
+  } /* Hold Slide 1 */
+  33% {
+    transform: translateX(-100%);
+  } /* Transition to Slide 2 */
+  58% {
+    transform: translateX(-100%);
+  } /* Hold Slide 2 */
+  66% {
+    transform: translateX(-200%);
+  } /* Transition to Slide 3 */
+  91% {
+    transform: translateX(-200%);
+  } /* Hold Slide 3 */
+  100% {
+    transform: translateX(0);
+  } /* Back to Slide 1 */
+}
+.text-truncate-3 {
+  display: -webkit-box;
+  max-width: 100%;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.text-truncate-5 {
+  display: -webkit-box;
+  max-width: 100%;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@media only screen and (max-width: 648px) {
+  .logo-nav {
+    width: 80px;
+  }
+  .fs-48 {
+    font-size: 36px !important;
+  }
+  .chat-wa {
+    position: fixed;
+    right: 30px;
+    bottom: 20px;
+    background-color: #25D366;
+  }
+  .img-not-found {
+    width: 150px;
+  }
+  section#section-top {
+    height: 700px;
+    padding-top: 100px;
+    padding-bottom: 60px;
+  }
+  section#home-about .img-home-about {
+    width: 350px;
+    height: 250px;
+    -o-object-fit: cover;
+       object-fit: cover;
+  }
+  section#home-about br {
+    display: none;
+  }
+  section#home-service .card-layanan {
+    width: 100%;
+    height: 200px;
+    padding: 24px 18px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 8px rgba(21, 21, 21, 0.1254901961);
+    transition: transform 0.2s;
+  }
+  section#home-service .card-layanan .svg-layanan {
+    width: 70px;
+    height: 70px;
+  }
+  section#home-service .card-layanan h4 {
+    font-size: 18px !important;
+  }
+  section#home-service .card-layanan:hover {
+    transform: scale(1.2);
+  }
+  section#about-vision .card-visi, section#about-vision .card-misi {
+    padding: 24px 18px;
+    box-shadow: 0px 2px 8px rgba(21, 21, 21, 0.1254901961);
+  }
+  section#about-vision .card-visi svg, section#about-vision .card-misi svg {
+    width: 150px;
+  }
+  section#service .card-service {
+    padding: 24px 18px;
+    width: 100%;
+    min-height: 215px;
+    max-height: -moz-fit-content;
+    max-height: fit-content;
+    box-shadow: 0px 2px 8px rgba(21, 21, 21, 0.1254901961);
+    color: #151515;
+    transition: transform 0.2s;
+  }
+  section#service .card-service img {
+    width: 70px;
+    height: 70px;
+  }
+  section#service .card-service h4 {
+    font-size: 16px !important;
+  }
+  section#service .card-service p {
+    font-size: 12px !important;
+  }
+  section#service .card-service:hover {
+    transform: scale(1.2);
+  }
+  section#maps .card-maps {
+    width: 100%;
+    height: 400px;
+  }
+  footer .logo-footer {
+    width: 100px;
+  }
+}/*# sourceMappingURL=style.css.map */
