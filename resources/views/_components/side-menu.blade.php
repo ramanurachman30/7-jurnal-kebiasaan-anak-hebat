@@ -2,14 +2,21 @@
     data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="225px"
     data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
     <div class="px-6 app-sidebar-logo" id="kt_app_sidebar_logo">
-        <a href="{{ url('dashboard') }}">
-            <img alt="Logo" src="{{ asset('assets/media/logos/LogoSyncTrans2 1.png') }}"
-                class="w-100 app-sidebar-logo-default theme-light-show">
-            <img alt="Logo" src="{{ asset('assets/media/logos/LogoSyncTrans2 1.png') }}"
-                class="w-100 app-sidebar-logo-default theme-dark-show">
-            <img alt="Logo" src="{{ asset('assets/media/logos/LogoSyncTrans2 1.png') }}"
-                class="h-20px app-sidebar-logo-minimize">
-        </a>
+        <div class="row">
+            <div class="col-4">
+                <a href="{{ url('dashboard') }}">
+                    <img alt="Logo" src="{{ asset('assets/media/pkm/2b5617d3-3c9f-4778-b08d-7e5790ec928a_980x979.png') }}"
+                        class="w-100 app-sidebar-logo-default theme-light-show">
+                    <img alt="Logo" src="{{ asset('assets/media/pkm/2b5617d3-3c9f-4778-b08d-7e5790ec928a_980x979.png') }}"
+                        class="w-100 app-sidebar-logo-default theme-dark-show">
+                    <img alt="Logo" src="{{ asset('assets/media/pkm/2b5617d3-3c9f-4778-b08d-7e5790ec928a_980x979.png') }}"
+                        class="h-100 app-sidebar-logo-minimize">
+                </a>
+            </div>
+            <div class="col-8 d-flex align-items-center">
+                <p class="mb-0 fw-bolder">7 Kebiasaan Anak Hebat Indonesia</p>
+            </div>
+        </div>
         <div id="kt_app_sidebar_toggle"
             class="app-sidebar-toggle btn btn-icon btn-shadow btn-sm btn-color-muted btn-active-color-primary body-bg h-30px w-30px position-absolute top-50 start-100 translate-middle rotate"
             data-kt-toggle="true" data-kt-toggle-state="active" data-kt-toggle-target="body"

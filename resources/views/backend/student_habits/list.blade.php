@@ -31,9 +31,8 @@
 
 @section('content')
     @php
+        // dd($forms);
         $column = [['data' => 'id']];
-        $tableName = $tableName;
-        $isDisabled = ($tableName === 'p_k_m_habits' && $total >= 7);
     @endphp
     <div id="kt_app_content_container" class="app-container container-fluid">
         <div class="card card-flush h-md-100">
@@ -61,19 +60,16 @@
                         <div class="border-gray-200 separator"></div>
                     </div>
 
-                    <a 
-                        href="{{ $isDisabled ? '#' : url('admin/' . Request::segment(2) . '/create') }}"
-                        class="btn {{ $isDisabled ? 'btn-secondary disabled' : 'btn-primary' }}"
-                        @if($isDisabled) aria-disabled="true" @endif
-                    >
+                    <a href="{{ url('admin/'. Request::segment(2) . '/create') }}" class="btn btn-primary">
                         <span class="svg-icon svg-icon-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none">
                                 <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1"
                                     transform="rotate(-90 11.364 20.364)" fill="currentColor" />
-                                <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="currentColor" />
+                                <rect x="4.36396" y="11.364" width="16" height="2" rx="1"
+                                    fill="currentColor" />
                             </svg>
-                        </span>
-                        {{ __('Add') }} {{ __(humanizeSegmentName($segmentName)) }}
+                        </span>{{ __('Add') }} {{ __(humanizeSegmentName($segmentName)) }}
                     </a>
                 </div>
                 <div class="d-flex justify-content-end align-items-center d-none" data-kt-user-table-toolbar="selected">
@@ -107,7 +103,6 @@
                                                         $column[] = [
                                                             'data' =>
                                                                 $items['name'] . '.' . $items['options']['display'],
-                                                                'defaultContent' => '-'
                                                         ];
                                                     @endphp
                                                 @break
@@ -146,5 +141,5 @@
 @endsection
 
 @section('customjs')
-    <script src="{{ asset('assets/js/custom/components/dataTable.js') }}"></script>
+    <script src="{{ asset('assets/js/custom/components/dataTable-student-habits.js') }}"></script>
 @endsection

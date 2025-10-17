@@ -59,9 +59,9 @@ class RoleController extends Controller
             ]);
 
             $this->createPriveleges($request->priveleges, $role->id);
-            return redirect($this->table_name)->with('success', 'Role Created!');
+            return redirect('admin/' . $this->table_name)->with('success', 'Role Created!');
         } catch (\Throwable $e) {
-            return redirect($this->table_name . '/create')->withErrors('Failed to create Role!');
+            return redirect('admin/' . $this->table_name . '/create')->withErrors('Failed to create Role!');
         }
     }
 
@@ -121,7 +121,7 @@ class RoleController extends Controller
             $model->save();
 
             $this->createPriveleges($request->priveleges, $id);
-            return redirect($this->table_name)->with('success', Str::title(Str::singular($this->table_name)) . ' updated!');
+            return redirect('admin/' . $this->table_name)->with('success', Str::title(Str::singular($this->table_name)) . ' updated!');
         } catch (Exception $e) {
             dd($e);
             // return redirect($this->table_name . '/' . $id . '/edit')->withErrors(Str::title(Str::singular($this->table_name)) . ' failed to update!');
@@ -135,9 +135,9 @@ class RoleController extends Controller
             $model->setAttribute('deleted_at', date('Y-m-d H:i:s'));
             $model->save();
 
-            return redirect($this->table_name)->with('success', Str::title(Str::singular($this->table_name)) . ' deleted!');
+            return redirect('admin/' . $this->table_name)->with('success', Str::title(Str::singular($this->table_name)) . ' deleted!');
         } catch (Exception $th) {
-            return redirect($this->table_name)->withErrors(Str::title(Str::singular($this->table_name)) . ' failed to delete!');
+            return redirect('admin/' . $this->table_name)->withErrors(Str::title(Str::singular($this->table_name)) . ' failed to delete!');
         }
     }
 
@@ -147,9 +147,9 @@ class RoleController extends Controller
         try {
             $model = $this->model::findOrFail($id);
             $model->delete();
-            return redirect($this->table_name)->with('success', Str::title(Str::singular($this->table_name)) . ' deleted!');
+            return redirect('admin/' . $this->table_name)->with('success', Str::title(Str::singular($this->table_name)) . ' deleted!');
         } catch (Exception $e) {
-            return redirect($this->table_name)->with('error', $e->getMessage());
+            return redirect('admin/' . $this->table_name)->with('error', $e->getMessage());
         }
     }
 

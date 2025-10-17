@@ -267,6 +267,8 @@ var KTDatatablesServerSide = function () {
                     orderable: false,
                     className: 'text-end',
                     render: function (data, type, row) {
+                    console.log(data);
+                    
                         var action = `
                             <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">
                                 {{ __('Action') }}

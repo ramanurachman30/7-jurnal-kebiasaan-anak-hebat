@@ -12,7 +12,7 @@
     <script src="{{ asset('assets/js/custom/theme-handler.js') }}"></script>
     <style>
         body {
-            background-image: url('{{ asset('assets/media/sync-indonesia-assets/MainBG.png') }}');
+            background-image: url('{{ asset('assets/media/pkm/joanna-kosinska-1_CMoFsPfso-unsplash.jpg') }}');
         }
 
         /* [data-theme="dark"] body {
@@ -40,8 +40,9 @@
                                 @method('POST')
                                 @csrf
                                 <div class="flex justify-center text-center mb-6">
-                                    <img alt="Logo" src="{{ asset('assets/media/logos/LogoSyncTrans2 1.png') }}"
-                                        class="h-[180px] lg:h-[90px]" />
+                                    <h1>Login Page</h1>
+                                    {{-- <img alt="Logo" src="{{ asset('assets/media/logos/LogoSyncTrans2 1.png') }}"
+                                        class="h-[180px] lg:h-[90px]" /> --}}
                                 </div>
                                 {{-- <div class="mb-5 fv-row form-floating">
                                     <input type="text" placeholder="Email" name="email" autocomplete="off"

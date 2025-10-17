@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row">
         <div class="mx-auto bg-white w-fit-content rounded-2">
-          <img style="width: 400px; height: 200px;" class="img-fluid" src="{{ asset('assets/media/sync-indonesia-assets/LogoSyncTrans2 1.png') }}" alt="logo mpk" class="logo-footer">
+          <img style="width: 400px; height: 200px;" class="img-fluid" src="{{ asset('assets/media/pkm/2b5617d3-3c9f-4778-b08d-7e5790ec928a_980x979.png') }}" alt="logo mpk" class="logo-footer">
         </div>
       </div>
     </div>

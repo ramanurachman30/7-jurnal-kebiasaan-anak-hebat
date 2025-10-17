@@ -19,11 +19,10 @@ Route::controller(GuestController::class)
         Route::get('/invitation/{slug}/messages', 'getMessages')->name('invitation.getMessages');
     });
 
-Route::get('/', [HomeController::class, 'index'])->name(RouteNames::HOME);
-Route::get('/about-us', [HomeController::class, 'aboutUsPage'])->name('aboutUsPage');
-Route::get('/products', [HomeController::class, 'products'])->name('products');
-Route::get('/contact-us', [HomeController::class, 'contactus'])->name('contactus');
-Route::get('/news-n-events', [HomeController::class, 'newsNEvents'])->name('newsNEvents');
-Route::get('/detail-events', [HomeController::class, 'detailEvents'])->name('detailEvents');
-Route::get('/detail-news', [HomeController::class, 'detailNews'])->name('detailNews');
+// Route::get('/about-us', [HomeController::class, 'aboutUsPage'])->name('aboutUsPage');
+// Route::get('/products', [HomeController::class, 'products'])->name('products');
+// Route::get('/contact-us', [HomeController::class, 'contactus'])->name('contactus');
+// Route::get('/news-n-events', [HomeController::class, 'newsNEvents'])->name('newsNEvents');
+// Route::get('/detail-events', [HomeController::class, 'detailEvents'])->name('detailEvents');
+// Route::get('/detail-news', [HomeController::class, 'detailNews'])->name('detailNews');
 

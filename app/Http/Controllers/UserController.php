@@ -64,11 +64,13 @@ class UserController extends Controller
             foreach ($fields as $key => $value) {
                 $this->model->setAttribute($key, $value);
             }
+            // dd($this->model);
             $this->model->save();
 
-            return redirect($this->table_name)->withInput()->with('success', Str::title(Str::singular($this->table_name)) . ' Created!');
+            return redirect('admin/' . $this->table_name)->withInput()->with('success', Str::title(Str::singular($this->table_name)) . ' Created!');
         } catch (Exception $e) {
-            return redirect($this->table_name)->withInput()->withErrors('Invalid Request!');
+            dd($e);
+            return redirect('admin/' . $this->table_name)->withInput()->withErrors('Invalid Request!');
         }
     }
 

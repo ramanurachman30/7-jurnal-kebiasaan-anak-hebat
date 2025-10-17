@@ -6,6 +6,7 @@ use App\Http\Controllers\ErrorControler;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\PKMStudentHabitsController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\UserController;
@@ -28,6 +29,10 @@ use Stevebauman\Location\Facades\Location;
 
 Route::get("/tailwind-test", function () {
     return view("tailwind-test");
+});
+
+Route::get("/", function () {
+    return view("auth.login");
 });
 
 Route::controller(ErrorControler::class)->prefix('error')
@@ -114,7 +119,16 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
         Route::post('/upload_file', [FileUploadController::class, 'file_upload'])->name('uploadfile');
     });
 
+
+
     Route::middleware(['user.access'])->group(function () {
+        // Route::controller(PKMStudentHabitsController::class)->prefix('student_habits')->name('student_habits.')->group(function () {
+        //     Route::get('/', 'list')->name('list');
+        //     Route::get('/create', 'create')->name('create');
+        //     Route::post('/', 'store')->name('store');
+        //     Route::get('/{id}/edit', 'edit')->name('edit');
+        //     Route::put('/{id}', 'update')->name('edit');
+        // });
         Route::controller(GoogleAnalitycController::class)->prefix('google-analytic')->group(function () {
             Route::get('/visitors-and-page-views-by-date', 'index')->name('visitors-and-page-views-by-date');
             Route::get('/top-refferrers', 'topRefferrersIndex')->name('top-refferrers');
@@ -161,6 +175,17 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
             Route::get('/{id}/attandance', 'attandance')->name('attandance');
             Route::get('/{id}/invitation', 'invitation')->name('invitation');
             Route::post('/{eventId}/invitation', 'import')->name('invitation.import');
+        });
+
+        Route::controller(PKMStudentHabitsController::class)
+        ->prefix('p_k_m_student_habits')
+        ->name('p_k_m_student_habits.')
+        ->group(function () {
+            Route::get('/', 'list')->name('list');
+            Route::get('/create', 'create')->name('create');
+            Route::post('/', 'store')->name('store');
+            Route::get('/{id}/edit', 'edit')->name('edit');
+            Route::put('/{id}', 'update')->name('edit');
         });
 
         // If you want to custom, please write above

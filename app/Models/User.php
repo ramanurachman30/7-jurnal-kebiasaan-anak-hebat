@@ -48,7 +48,7 @@ class User extends Authenticatable
     protected $forms = [
         [
             'name' => 'photo',
-            'required' => true,
+            'required' => false,
             'column' => 3,
             'label' => 'Photo',
             'type' => 'thumbnail',

@@ -30,6 +30,7 @@ class EventController extends AppController
 
     public function __construct(Request $request, Event $model)
     {
+        // dd($model);
         try {
             $this->segment = $request->segment(1);
             if (file_exists(app_path('Models/' . Str::studly($this->segment)) . '.php')) {
@@ -56,6 +57,7 @@ class EventController extends AppController
     public function list()
     {
         $this->view = view('backend.event.list', ['forms' => $this->forms]);
+        // dd($this->segment);
         return $this->view->with(
             [
                 'forms' => $this->forms,
@@ -159,6 +161,7 @@ class EventController extends AppController
     }
     public function listener($eventId)
     {
+        
         $event = Event::with([
             'contentInvitations' => function ($query) {
                 $query->with(['imageContents']);

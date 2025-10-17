@@ -17,6 +17,7 @@ class AppController extends Controller
     protected $segmentName;
     protected $forms;
     protected $reference;
+    protected $total;
 
     public function __construct(Request $request, Resources $model)
     {
@@ -38,6 +39,7 @@ class AppController extends Controller
             $this->segmentName = Str::studly($this->segment);
             $this->forms = $this->model->getForms();
             $this->reference = $this->model->getReference();
+            $this->total = $this->model->count();
         } catch (Exception $e) {
             //throw $th;
         }
@@ -46,13 +48,18 @@ class AppController extends Controller
     public function list()
     {
         $model = $this->model;
+        $tableName = $model->getTable();
+        // dd($this->total);
         if (!$model) abort(404);
         try {
             $this->view = $this->checkView($this->view, 'list');
+            // dd($this->view);
             return $this->view->with(
                 [
                     'forms' => $this->forms,
-                    'segmentName' => $this->segmentName
+                    'segmentName' => $this->segmentName,
+                    'tableName' => $tableName,
+                    'total' => $this->total
                 ]
             );
         } catch (Exception $e) {
