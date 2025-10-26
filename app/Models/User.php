@@ -24,7 +24,7 @@ class User extends Authenticatable
      */
     protected $table = 'users';
     protected $rules = [
-        'first_name' => ['required', 'string', 'max:255'],
+        'name' => ['required', 'string', 'max:255'],
         'username' => ['required', 'string', 'max:255', 'unique'],
         'email' => ['required', 'email', 'max:255', 'unique'],
         'role' => ['required'],
@@ -33,9 +33,7 @@ class User extends Authenticatable
 
     protected $fillable = [
         'id',
-        'photo',
-        'first_name',
-        'last_name',
+        'name',
         'username',
         'email',
         'gender',
@@ -47,26 +45,10 @@ class User extends Authenticatable
 
     protected $forms = [
         [
-            'name' => 'photo',
-            'required' => false,
-            'column' => 3,
-            'label' => 'Photo',
-            'type' => 'thumbnail',
-            'display' => true
-        ],
-        [
-            'name' => 'first_name',
+            'name' => 'name',
             'required' => true,
             'column' => 3,
-            'label' => 'First Name',
-            'type' => 'text',
-            'display' => true
-        ],
-        [
-            'name' => 'last_name',
-            'required' => true,
-            'column' => 3,
-            'label' => 'Last Name',
+            'label' => 'Nama',
             'type' => 'text',
             'display' => true
         ],
@@ -136,19 +118,6 @@ class User extends Authenticatable
             ],
             'display' => true
         ],
-        [
-            'name' => 'status',
-            'required' => true,
-            'column' => 2,
-            'label' => 'Status',
-            'type' => 'sysparam',
-            'options' => [
-                'key' => 'key',
-                'display' => 'value',
-                'group' => 'Activation'
-            ],
-            'display' => true
-        ],
     ];
 
     /**
@@ -163,7 +132,6 @@ class User extends Authenticatable
 
     protected $reference = [
         'role',
-        'status',
         'gender'
     ];
 
@@ -223,13 +191,6 @@ class User extends Authenticatable
     public function role()
     {
         return $this->belongsTo(Roles::class, 'role', 'id');
-    }
-
-    public function status()
-    {
-        return $this->belongsTo(Sysparams::class, 'status', 'key')
-            ->withTrashed()
-            ->where('groups', 'Activation');
     }
 
     public function updateRules()

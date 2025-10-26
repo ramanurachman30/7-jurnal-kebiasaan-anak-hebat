@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Roles;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
@@ -15,17 +16,20 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        $roleGuru = Roles::where('name', 'Guru')->first();
+        if (!$roleGuru) {
+            $roleGuru = Roles::create(['name' => 'Guru']);
+        }
         $users = [
             'photo' => null,
-            'first_name' => 'Super',
-            'last_name' => 'Admin',
-            'username' => 'superadmin',
-            'email' => 'superadmin@mail.com',
+            'name' => 'Guru',
+            'username' => 'guru',
+            'email' => 'guru@mail.com',
             'gender' => 'Male',
             'address' => 'Jakarta',
             'phone_number' => '08191100000',
             'password' => bcrypt('password'),
-            'role' => 1
+            'role' => $roleGuru->id
         ];
 
         foreach ($users as $user) {

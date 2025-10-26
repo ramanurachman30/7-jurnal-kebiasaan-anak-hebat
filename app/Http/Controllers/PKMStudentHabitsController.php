@@ -24,8 +24,8 @@ class PKMStudentHabitsController extends AppController
     protected $reference;
 
     public function __construct(Request $request, PKMStudentHabits $model)
-{
-    try {
+    {
+        try {
             $this->segment = $request->segment(2);
             
             if (file_exists(app_path('Models/' . Str::studly($this->segment)) . '.php')) {
@@ -47,28 +47,22 @@ class PKMStudentHabitsController extends AppController
         } catch (Exception $e) {
             //throw $th;
         }
-}
+    }
 
     public function list()
     {
-        // $data = PKMStudentHabits::with(['student_id', 'habit_id'])->get();
-        // dd($data['student_id']);
-        // dd($this->segmentName);
         $this->view = view('backend.student_habits.list', ['forms' => $this->forms]);
         return $this->view->with([
             'forms' => $this->forms,
-            'segmentName' => $this->segmentName            // 'data' => $data
+            'segmentName' => $this->segmentName,
         ]);
     }
 
     public function create()
     {
-        $user = Auth::user();
-        $student = PKMStudents::where('user_id', $user->id)->first();
         $habits = PKMHabits::all();
 
         $data = [
-            "students" => $student,
             "habits" => $habits,
         ];
 
@@ -87,6 +81,7 @@ class PKMStudentHabitsController extends AppController
                 'date' => 'required|date',
                 'habits' => 'required|array',
             ]);
+            // dd($validated);
 
             foreach ($validated['habits'] as $habit_id) {
                 PKMStudentHabits::create([
@@ -96,11 +91,11 @@ class PKMStudentHabitsController extends AppController
                     'is_checked' => '1',
                 ]);
             }
-            // dd($validated);
 
             DB::commit();
-            return redirect('admin/student_habits/')->with('success', 'Data student habits berhasil disimpan!');
+            return redirect('admin/student_habits')->with('success', 'Data student habits berhasil disimpan!');
         } catch (Exception $e) {
+            // dd($e);
             DB::rollBack();
             Log::error('Store StudentHabit Error', [
                 'message' => $e->getMessage(),

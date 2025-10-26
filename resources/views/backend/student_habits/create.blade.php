@@ -7,12 +7,12 @@
             <h3>📝 Isi Checklist Kebiasaan Hari Ini</h3>
         </div>
         <div class="card-body">
-        <form action="{{ route('pkm_student_habits.store') }}" method="POST">
+        <form action="{{ route('p_k_m_student_habits.store') }}" method="POST">
             @csrf
             <div class="form-group mb-3">
                 <label>Student</label>
-                <input type="text" class="form-control" value="{{ $data['students']->student_name }}" readonly>
-                <input type="hidden" name="student_id" value="{{ $data['students']->id }}">
+                <input type="text" class="form-control" value="{{ auth()->user()->name }}" readonly>
+                <input type="hidden" name="student_id" value="{{ auth()->user()->id }}">
             </div>
             <div class="mb-3">
                 <label for="date" class="form-label">Tanggal</label>

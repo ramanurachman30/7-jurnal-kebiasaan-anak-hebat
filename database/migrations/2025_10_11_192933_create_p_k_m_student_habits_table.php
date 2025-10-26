@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('habit_id');
             $table->date('date');
             $table->boolean('is_checked')->default(false);
-            $table->foreign('student_id')->references('id')->on('p_k_m_students')->onDelete('cascade');
+            $table->foreign('student_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('habit_id')->references('id')->on('p_k_m_habits')->onDelete('cascade');
             $table->owners();
         });

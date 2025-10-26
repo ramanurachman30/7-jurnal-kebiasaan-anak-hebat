@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\GoogleAnalitycController;
 use App\Http\Controllers\AppController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ErrorControler;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\FileUploadController;
@@ -34,6 +35,12 @@ Route::get("/tailwind-test", function () {
 Route::get("/", function () {
     return view("auth.login");
 });
+
+Route::get('/register', function () {
+    return view('auth.register-murid');
+});
+
+Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');
 
 Route::controller(ErrorControler::class)->prefix('error')
     ->name('errors')

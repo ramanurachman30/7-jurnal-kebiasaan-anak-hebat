@@ -20,16 +20,4 @@
             <!--end:Menu link-->
         </div>
     @endif
-    @if (Auth::allowedUri('event.list'))
-        <div class="menu-item position-relative">
-            <!--begin:Menu link-->
-            <a class="menu-link" href="{{ url('admin/event') }}">
-                <span class="menu-icon">
-                    <i class="bi bi-arrows-fullscreen"></i>
-                </span>
-                <span class="menu-title">{{ __('Event') }}</span>
-            </a>
-            <!--end:Menu link-->
-        </div>
-    @endif
 @endif

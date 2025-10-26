@@ -13,7 +13,8 @@ class UserManagement extends Seeder
 {
     public function run()
     {
-        $role = Roles::updateOrCreate(['name' => 'Developers']);
+        $role = Roles::updateOrCreate(['name' => 'Guru']);
+        $murid = Roles::updateOrCreate(['name' => 'Murid']);
 
         $privilege = Priveleges::updateOrCreate([
             'module' => 'DEVELOPER',
@@ -35,13 +36,24 @@ class UserManagement extends Seeder
             ]
         );
 
+        RolePriveleges::updateOrCreate(
+            [
+                'role' => $murid->id,
+                'namespace' => '*'
+            ],
+            [
+                'role' => $murid->id,
+                'namespace' => '*'
+            ]
+        );
+
         // Temporary Commented
         User::updateOrCreate([
             'username' => 'superadmin'
         ], [
             'photo' => null,
-            'first_name' => 'Super',
-            'last_name' => 'Admin',
+            'name' => 'Guru',
+            'username' => 'superadmin',
             'email' => 'superadmin@mail.com',
             'gender' => 'Male',
             'address' => 'Jakarta',

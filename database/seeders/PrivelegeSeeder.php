@@ -43,6 +43,12 @@ class PrivelegeSeeder extends Seeder
                     'priveleges'
                 ]
             ],
+            [
+                'group' => 'JURNAL HARIAN',
+                'sub_modul' => [
+                    'p_k_m_student_habits',
+                ]
+            ],
         ];
 
         for ($i = 0; $i < count($data); $i++) {

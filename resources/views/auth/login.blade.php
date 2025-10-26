@@ -128,6 +128,14 @@
                                             <span class="align-middle spinner-border spinner-border-sm ms-2"></span></span>
                                     </button>
                                 </div>
+                                <div class="d-grid text-center">
+                                    <a 
+                                        class="underline text-lg text-gray-600 hover:text-gray-900" 
+                                        href="{{ route('register') }}"
+                                    >
+                                        {{ __('Belum punya akun?') }}
+                                    </a>
+                                </div>
                             </form>
                         @show
                     </div>

@@ -298,28 +298,6 @@ var KTDatatablesServerSide = function () {
                                 @endif
                         `;
 
-                        if (data.status.value == 'Active') {
-                            action += `
-                                @if(Auth::allowedUri('user.activation'))
-                                <div class="px-3 menu-item">
-                                    <a data-remote="{{ url('api/admin/'.Request::segment(2)) }}/${data.id}/activation/${data.status.key}" class="px-3 menu-link" data-kt-user-table-filter="set_not_active">
-                                        {{ __('Set Not Active') }}
-                                    </a>
-                                </div>
-                                @endif
-                            `;
-                        } else {
-                            action += `
-                                @if(Auth::allowedUri('user.activation'))
-                                <div class="px-3 menu-item">
-                                    <a data-remote="{{ url('api/admin/'.Request::segment(2)) }}/${data.id}/activation/${data.status.key}" class="px-3 menu-link" data-kt-user-table-filter="activate_user">
-                                        {{ __('Activate') }}
-                                    </a>
-                                </div>
-                                @endif
-                            `;
-                        }
-
                         action += `</div>`;
 
                         return action;

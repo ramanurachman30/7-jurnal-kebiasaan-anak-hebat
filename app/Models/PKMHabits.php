@@ -17,7 +17,7 @@ class PKMHabits extends Resources
 
     protected $rules = [
         'habit_name' => ['required', 'string', 'max:50'],
-        'habit_description' => ['required', 'string', 'max:100'],
+        'habit_description' => ['required', 'string', 'max:255'],
     ];
 
     protected $forms = [
@@ -34,7 +34,7 @@ class PKMHabits extends Resources
             'required' => true,
             'column' => 2,
             'label' => 'Habit Description',
-            'type' => 'text',
+            'type' => 'textarea',
             'display' => true
         ],
     ];

@@ -31,8 +31,10 @@
 
 @section('content')
     @php
-        // dd($forms);
-        $column = [['data' => 'id']];
+        // Hilangkan kolom ID dari tampilan DataTable
+        $column = [
+            ['data' => 'id', 'visible' => false, 'searchable' => false]
+        ];
     @endphp
     <div id="kt_app_content_container" class="app-container container-fluid">
         <div class="card card-flush h-md-100">
@@ -60,17 +62,32 @@
                         <div class="border-gray-200 separator"></div>
                     </div>
 
-                    <a href="{{ url('admin/'. Request::segment(2) . '/create') }}" class="btn btn-primary">
-                        <span class="svg-icon svg-icon-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none">
-                                <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1"
-                                    transform="rotate(-90 11.364 20.364)" fill="currentColor" />
-                                <rect x="4.36396" y="11.364" width="16" height="2" rx="1"
-                                    fill="currentColor" />
-                            </svg>
-                        </span>{{ __('Add') }} {{ __(humanizeSegmentName($segmentName)) }}
-                    </a>
+                    @if( auth()->user()->role == 1 )
+                        <a href="{{ url('admin/'. Request::segment(2) . '/create') }}" style="display: none" class="btn btn-primary">
+                            <span class="svg-icon svg-icon-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none">
+                                    <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1"
+                                        transform="rotate(-90 11.364 20.364)" fill="currentColor" />
+                                    <rect x="4.36396" y="11.364" width="16" height="2" rx="1"
+                                        fill="currentColor" />
+                                </svg>
+                            </span>{{ __('Add') }} {{ __(humanizeSegmentName($segmentName)) }}
+                        </a>
+                    @else
+                        <a href="{{ url('admin/'. Request::segment(2) . '/create') }}" class="btn btn-primary">
+                            <span class="svg-icon svg-icon-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none">
+                                    <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1"
+                                        transform="rotate(-90 11.364 20.364)" fill="currentColor" />
+                                    <rect x="4.36396" y="11.364" width="16" height="2" rx="1"
+                                        fill="currentColor" />
+                                </svg>
+                            </span>{{ __('Add') }} {{ __(humanizeSegmentName($segmentName)) }}
+                        </a>
+                    @endif
+
                 </div>
                 <div class="d-flex justify-content-end align-items-center d-none" data-kt-user-table-toolbar="selected">
                     <div class="fw-bolder me-5">
@@ -89,20 +106,20 @@
                                 <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
                                     <th class="w-10px pe-2">
                                         <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
-                                            <input class="form-check-input" type="checkbox" data-kt-check="true"
+                                            {{-- <input class="form-check-input" type="checkbox" data-kt-check="true"
                                                 data-kt-check-target="#kt_datatable_example_1 .form-check-input"
-                                                value="1" />
+                                                value="1" /> --}}
                                         </div>
                                     </th>
                                     @foreach ($forms as $key => $items)
-                                        @if ($items['display'])
+                                        {{-- ✅ Lewati field id agar tidak tampil di tabel --}}
+                                        @if ($items['display'] && $items['name'] !== 'id')
                                             <th class="text-nowrap">{{ __($items['label']) }}</th>
                                             @switch($items['type'])
                                                 @case('sysparam')
                                                     @php
                                                         $column[] = [
-                                                            'data' =>
-                                                                $items['name'] . '.' . $items['options']['display'],
+                                                            'data' => $items['name'] . '.' . $items['options']['display'],
                                                         ];
                                                     @endphp
                                                 @break
@@ -120,10 +137,10 @@
                                             @endswitch
                                         @endif
                                     @endforeach
-                                    @php
+                                    {{-- @php
                                         $column[] = ['data' => null];
                                     @endphp
-                                    <th class="text-end min-w-100px"></th>
+                                    <th class="text-end min-w-100px"></th> --}}
                                 </tr>
                             </thead>
                             <tbody class="text-gray-600 fw-semibold">
@@ -141,5 +158,5 @@
 @endsection
 
 @section('customjs')
-    <script src="{{ asset('assets/js/custom/components/dataTable-student-habits.js') }}"></script>
+    <script src="{{ asset('assets/js/custom/components/dataTable.js') }}"></script>
 @endsection
