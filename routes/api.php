@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\ApiUserController;
 use App\Http\Controllers\Api\ComponentController;
 use App\Http\Controllers\Api\GoogleAnalitycController;
 use App\Http\Controllers\Api\HelperController;
+use App\Http\Controllers\Api\PKMStudentHabitsController;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -45,6 +46,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
             return $request->user();
         });
         Route::put('/{id}/activation/{status}', 'activation')->name('activation');
+    });
+
+    Route::controller(PKMStudentHabitsController::class)->prefix('p_k_m_student_habits')->name('p_k_m_student_habits.')->group(function () {
+        Route::post('/datatable', 'dataTable')->name('datatable');
+        Route::get('/check-today', 'checkToday')->name('check-today');
     });
 
     // custom api global controller for user

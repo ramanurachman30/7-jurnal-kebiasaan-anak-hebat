@@ -53,6 +53,10 @@ class ApiGlobalController extends Controller
         $params = $request->get('params');
         $status = $request->get('status');
 
+        // Tambahan filter tanggal
+        $startDate = $request->get('start_date');
+        $endDate = $request->get('end_date');
+
         $model = $this->model;
         $fields = $model->getFields();
 
@@ -117,10 +121,27 @@ class ApiGlobalController extends Controller
             }
         }
 
+        // 🔹 Tambahkan filter tanggal di sini
+        if (!empty($startDate) && !empty($endDate)) {
+            $model = $model->whereBetween('created_at', [$startDate . ' 00:00:00', $endDate . ' 23:59:59']);
+        } elseif (!empty($startDate)) {
+            $model = $model->whereDate('created_at', '>=', $startDate);
+        } elseif (!empty($endDate)) {
+            $model = $model->whereDate('created_at', '<=', $endDate);
+        }
+
+        $user = auth()->user();
+        if ($user->role == 2) { // role 2 = murid
+            $model = $model->where('student_id', $user->id);
+        }
+
         $total = $model->count();
 
         if (!empty($orderBy)) {
-            $model = $model->orderBy($forms[$request->get('order')[0]['column']], $request->get('order')[0]['column'] == 0 ? 'desc' : $request->get('order')[0]['dir']);
+            $model = $model->orderBy(
+                $forms[$request->get('order')[0]['column']],
+                $request->get('order')[0]['column'] == 0 ? 'desc' : $request->get('order')[0]['dir']
+            );
         }
 
         $model = $model->offset($offset);

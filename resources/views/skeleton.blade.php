@@ -27,6 +27,7 @@ License: For each use you must have a valid license purchased only from above li
     {{-- <meta http-equiv="Content-Security-Policy" content="form-action 'none'" /> --}}
     @yield('meta')
     <link rel="shortcut icon" href="{{ asset('assets/media/logos/favicon.ico') }}" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
     {{-- <link rel="stylesheet" href="{{ asset('assets/') }}"> --}}
     @yield('customcss')
     @include('metronic/css')

@@ -3,160 +3,298 @@
 @section('meta')
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="datatable-url" content="{{ url('api/admin/' . Request::segment(2) . '/datatable') }}">
-    <meta name="first-segment" content="{{ url('admin/'. Request::segment(2)) }}">
+    <meta name="first-segment" content="{{ url('admin/' . Request::segment(2)) }}">
     <meta name="first-segment-api" content="{{ url('api/admin/' . Request::segment(2)) }}">
-    <meta name="permission" update="{{ Auth::allowedUri(Request::segment(2) . '.edit') ? true : false }}"
-        trash="{{ Auth::allowedUri(Request::segment(2) . '.trash') ? true : false }}">
+    <meta name="permission"
+        update="{{ Auth::allowedUri(Request::segment(2) . '.edit') ? 'true' : 'false' }}"
+        trash="{{ Auth::allowedUri(Request::segment(2) . '.trash') ? 'true' : 'false' }}">
 @endsection
 
 @section('toolbar')
-    <a href="{{ url('admin/'. Request::segment(2) . '/trashed') }}" class="btn btn-lg btn-light-youtube">
-        <span class="svg-icon svg-icon-danger svg-icon-2">
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
-                viewBox="0 0 24 24" version="1.1">
-                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                    <rect x="0" y="0" width="24" height="24" />
-                    <path
-                        d="M6,8 L18,8 L17.106535,19.6150447 C17.04642,20.3965405 16.3947578,21 15.6109533,21 L8.38904671,21 C7.60524225,21 6.95358004,20.3965405 6.89346498,19.6150447 L6,8 Z M8,10 L8.45438229,14.0894406 L15.5517885,14.0339036 L16,10 L8,10 Z"
-                        fill="currentColor" fill-rule="nonzero" />
-                    <path
-                        d="M14,4.5 L14,3.5 C14,3.22385763 13.7761424,3 13.5,3 L10.5,3 C10.2238576,3 10,3.22385763 10,3.5 L10,4.5 L5.5,4.5 C5.22385763,4.5 5,4.72385763 5,5 L5,5.5 C5,5.77614237 5.22385763,6 5.5,6 L18.5,6 C18.7761424,6 19,5.77614237 19,5.5 L19,5 C19,4.72385763 18.7761424,4.5 18.5,4.5 L14,4.5 Z"
-                        fill="currentColor" opacity="0.3" />
-                </g>
-            </svg>
-        </span>
-        {{ __('Trash') }}
-    </a>
+    @if (Auth::allowedUri(url('admin/' . Request::segment(2) . '/trashed')))
+        <a href="{{ url('admin/' . Request::segment(2) . '/trashed') }}" class="btn btn-lg btn-light-youtube">
+            <span class="svg-icon svg-icon-danger svg-icon-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                    <g fill="none" fill-rule="evenodd">
+                        <rect width="24" height="24" />
+                        <path
+                            d="M6,8 L18,8 L17.106535,19.615 C17.04642,20.3965 16.3948,21 15.611,21 L8.389,21 C7.605,21 6.9536,20.3965 6.8935,19.615 L6,8 Z"
+                            fill="currentColor" />
+                        <path
+                            d="M14,4.5 L14,3.5 C14,3.2239 13.7761,3 13.5,3 L10.5,3 C10.2239,3 10,3.2239 10,3.5 L10,4.5 L5.5,4.5 C5.2239,4.5 5,4.7239 5,5 L5,5.5 C5,5.7761 5.2239,6 5.5,6 L18.5,6 C18.7761,6 19,5.7761 19,5.5 L19,5 C19,4.7239 18.7761,4.5 18.5,4.5 L14,4.5 Z"
+                            fill="currentColor" opacity="0.3" />
+                    </g>
+                </svg>
+            </span>
+            {{ __('Trash') }}
+        </a>
+    @endif
 @endsection
 
 @section('content')
     @php
-        // Hilangkan kolom ID dari tampilan DataTable
-        $column = [
-            ['data' => 'id', 'visible' => false, 'searchable' => false]
-        ];
+        $column = [['data' => 'id']];
     @endphp
+
     <div id="kt_app_content_container" class="app-container container-fluid">
         <div class="card card-flush h-md-100">
             <div class="card-header pt-7">
-                <div class="my-1 d-flex align-items-center position-relative">
-                    <span class="svg-icon svg-icon-1 position-absolute ms-6">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none">
-                            <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1"
-                                transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
-                            <path
-                                d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z"
-                                fill="currentColor" />
-                        </svg>
-                    </span>
-                    <input type="text" data-kt-user-table-filter="search"
-                        class="form-control form-control-solid w-250px ps-14"
-                        placeholder="{{ __('Search') }} {{ __(humanizeSegmentName($segmentName)) }}" />
-                </div>
-                <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
-                    <div class="menu menu-sub menu-sub-dropdown w-300px w-md-325px" data-kt-menu="true">
-                        <div class="py-5 px-7">
-                            <div class="fs-5 text-dark fw-bolder">{{ __('Filter Options') }}</div>
-                        </div>
-                        <div class="border-gray-200 separator"></div>
+                {{-- Toolbar utama --}}
+                <div class="row align-items-end g-3" data-kt-user-table-toolbar="base">
+                    <div class="col-md-3">
+                        <label>Dari Tanggal:</label>
+                        <input type="date" id="startDate" class="form-control" />
+                    </div>
+                    <div class="col-md-3">
+                        <label>Sampai Tanggal:</label>
+                        <input type="date" id="endDate" class="form-control" />
+                    </div>
+                    <div class="col-md-2">
+                        <button id="filterBtn" class="btn btn-primary w-100">Filter</button>
                     </div>
 
-                    @if( auth()->user()->role == 1 )
-                        <a href="{{ url('admin/'. Request::segment(2) . '/create') }}" style="display: none" class="btn btn-primary">
-                            <span class="svg-icon svg-icon-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none">
-                                    <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1"
-                                        transform="rotate(-90 11.364 20.364)" fill="currentColor" />
-                                    <rect x="4.36396" y="11.364" width="16" height="2" rx="1"
-                                        fill="currentColor" />
-                                </svg>
-                            </span>{{ __('Add') }} {{ __(humanizeSegmentName($segmentName)) }}
-                        </a>
-                    @else
-                        <a href="{{ url('admin/'. Request::segment(2) . '/create') }}" class="btn btn-primary">
-                            <span class="svg-icon svg-icon-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none">
-                                    <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1"
-                                        transform="rotate(-90 11.364 20.364)" fill="currentColor" />
-                                    <rect x="4.36396" y="11.364" width="16" height="2" rx="1"
-                                        fill="currentColor" />
-                                </svg>
-                            </span>{{ __('Add') }} {{ __(humanizeSegmentName($segmentName)) }}
-                        </a>
-                    @endif
+                    <!-- 🔹 Container export -->
+                    <div class="col-md-2 {{ auth()->user()->role == 2 ? 'd-none' : '' }}" id="exportContainer"></div>
 
+                    <!-- 🔹 Tombol Add sejajar -->
+                    <div class="col-md-6 text-end">
+                        <a href="{{ url('admin/' . Request::segment(2) . '/create') }}" 
+                            class="btn btn-primary {{ auth()->user()->role == 1 ? 'd-none' : '' }}">
+                            <span class="svg-icon svg-icon-2 me-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                                    <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1"
+                                        transform="rotate(-90 11.364 20.364)" fill="currentColor" />
+                                    <rect x="4.364" y="11.364" width="16" height="2" rx="1"
+                                        fill="currentColor" />
+                                </svg>
+                            </span>{{ __('Add') }} {{ __(humanizeSegmentName($segmentName)) }}
+                        </a>
+                    </div>
                 </div>
+
+                {{-- Toolbar ketika ada checkbox yang dipilih --}}
                 <div class="d-flex justify-content-end align-items-center d-none" data-kt-user-table-toolbar="selected">
-                    <div class="fw-bolder me-5">
-                        <span class="me-2" data-kt-user-table-select="selected_count"></span>{{ __('Selected') }}
+                    <div class="fw-bold me-3">
+                        <span data-kt-user-table-select="selected_count">0</span> {{ __('Selected') }}
                     </div>
-                    <button type="button" class="btn btn-danger"
-                        data-kt-user-table-select="delete_selected">{{ __('Delete Selected') }}</button>
+                    <button type="button" class="btn btn-danger" id="deleteSelected">
+                        {{ __('Delete Selected') }}
+                    </button>
                 </div>
             </div>
-            <div class="pt-6 card-body">
-                <div class="kt_table_users_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
-                    <div class="table-responsive">
-                        <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer"
-                            id="kt_datatable_example_1">
-                            <thead>
-                                <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
-                                    <th class="w-10px pe-2">
-                                        <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
-                                            {{-- <input class="form-check-input" type="checkbox" data-kt-check="true"
-                                                data-kt-check-target="#kt_datatable_example_1 .form-check-input"
-                                                value="1" /> --}}
-                                        </div>
-                                    </th>
-                                    @foreach ($forms as $key => $items)
-                                        {{-- ✅ Lewati field id agar tidak tampil di tabel --}}
-                                        @if ($items['display'] && $items['name'] !== 'id')
-                                            <th class="text-nowrap">{{ __($items['label']) }}</th>
-                                            @switch($items['type'])
-                                                @case('sysparam')
-                                                    @php
-                                                        $column[] = [
-                                                            'data' => $items['name'] . '.' . $items['options']['display'],
-                                                        ];
-                                                    @endphp
-                                                @break
 
-                                                @case('fileupload')
-                                                    @php
-                                                        $column[] = ['data' => $items['name'] . '.name'];
-                                                    @endphp
-                                                @break
-
-                                                @default
-                                                    @php
-                                                        $column[] = ['data' => $items['name']];
-                                                    @endphp
-                                            @endswitch
-                                        @endif
-                                    @endforeach
-                                    {{-- @php
-                                        $column[] = ['data' => null];
-                                    @endphp
-                                    <th class="text-end min-w-100px"></th> --}}
-                                </tr>
-                            </thead>
-                            <tbody class="text-gray-600 fw-semibold">
-                            </tbody>
-                        </table>
-                    </div>
+            {{-- Table --}}
+            <div class="card-body pt-6">
+                <div class="table-responsive">
+                    <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer"
+                        id="kt_datatable_example_1">
+                        <thead>
+                            <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+                                <th class="w-10px pe-2"></th>
+                                @foreach ($forms as $key => $items)
+                                    @if ($items['display'])
+                                        <th class="text-nowrap">{{ __($items['label']) }}</th>
+                                        @php
+                                            $column[] = $items['type'] == 'sysparam'
+                                                ? ['data' => $items['name'] . '.' . $items['options']['display']]
+                                                : ['data' => $items['name']];
+                                        @endphp
+                                    @endif
+                                @endforeach
+                                @php $column[] = ['data' => null]; @endphp
+                                <th class="text-end min-w-100px"></th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-gray-600 fw-semibold"></tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
-    @php
-        $columns = json_encode($column, true);
-    @endphp
+
+    @php $columns = json_encode($column); @endphp
     <input type="hidden" name="data-columns" value="{{ $columns }}">
 @endsection
 
 @section('customjs')
-    <script src="{{ asset('assets/js/custom/components/dataTable.js') }}"></script>
+<!-- ✅ DataTables Buttons JS dan dependencies -->
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+
+<!-- ✅ File export dependencies -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+<script>
+"use strict";
+
+var KTDatatablesServerSide = function () {
+    var dt;
+    var searchAdvance = [];
+
+    var initDatatable = function () {
+        dt = $("#kt_datatable_example_1").DataTable({
+            searchDelay: 500,
+            processing: true,
+            serverSide: true,
+            select: {
+                style: 'multi',
+                selector: 'td:first-child input[type="checkbox"]',
+                className: 'row-selected'
+            },
+            ajax: {
+                url: "{{ url('api/admin/' . Request::segment(2) . '/datatable') }}",
+                type: 'POST',
+                headers: {
+                    'Authorization': 'Bearer {{ session('bearer_token') ?? '' }}',
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: function (data) {
+                    data.start_date = $('#startDate').val();
+                    data.end_date = $('#endDate').val();
+                    data.params = searchAdvance;
+                    data.search = data.search.value;
+                },
+                complete: function () {
+                    $("#kt_datatable_example_1").find("th:first-child").removeClass("sorting_asc");
+                }
+            },
+            columns: @json($column),
+            columnDefs: [{
+                targets: 0,
+                orderable: false,
+                render: function (data) {
+                    return "";
+                }
+            },
+            {
+                targets: 4,
+                data: null,
+                orderable: false,
+                className: 'text-end',
+                render: function (data, type, row){
+                    console.log(row);
+                    if (row.is_checked === 1) {
+                        return `<span class="badge badge-success">TerCeklis</span>`;
+                    } else {
+                        return `<span class="badge badge-danger">Belum Ceklis</span>`;
+                    }
+                }
+            },
+            {
+                targets: -1,
+                data: null,
+                orderable: false,
+                className: 'text-end',
+                render: function (data, type, row){
+                    return "";
+                }
+            }
+        ],
+        // ✅ Tambahkan DOM dan tombol export di sini
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'excelHtml5',
+                title: 'Export Data - {{ ucfirst(Request::segment(2)) }} - ' + new Date().toLocaleDateString(),
+                text: '<i class="fas fa-file-excel"></i> Excel',
+                className: 'btn btn-success me-2'
+            }
+        ]
+        });
+
+        dt.buttons().container().appendTo('#exportContainer');
+
+        dt.on('draw', function () {
+            initToggleToolbar();
+            toggleToolbars();
+            if (typeof KTMenu !== 'undefined') KTMenu.createInstances();
+        });
+
+        // 🔹 tombol filter: refresh tabel berdasarkan tanggal
+        $('#filterBtn').click(function () {
+            dt.ajax.reload();
+        });
+
+        // Tombol export (opsional)
+        $('#exportBtn').click(function () {
+            // Kamu bisa tambahkan URL export Excel dengan parameter tanggal di sini
+            let start = $('#startDate').val();
+            let end = $('#endDate').val();
+            window.location.href = "{{ url('api/admin/' . Request::segment(2) . '/export') }}?start_date=" + start + "&end_date=" + end;
+        });
+    }
+
+    var handleSearchDatatable = function () {
+        const filterSearch = document.querySelector('[data-kt-user-table-filter="search"]');
+        if (!filterSearch) return;
+        filterSearch.addEventListener('keyup', e => dt.search(e.target.value).draw());
+    }
+
+    var initToggleToolbar = function () {
+        const container = document.querySelector('#kt_datatable_example_1');
+        const checkboxes = container.querySelectorAll('[type="checkbox"]');
+        checkboxes.forEach(c => {
+            c.addEventListener('click', function () {
+                setTimeout(toggleToolbars, 50);
+            });
+        });
+    }
+
+    var toggleToolbars = function () {
+        const container = document.querySelector('#kt_datatable_example_1');
+        const toolbarBase = document.querySelector('[data-kt-user-table-toolbar="base"]');
+        const toolbarSelected = document.querySelector('[data-kt-user-table-toolbar="selected"]');
+        const selectedCount = document.querySelector('[data-kt-user-table-select="selected_count"]');
+
+        // Hindari error jika elemen belum tersedia
+        if (!toolbarBase || !toolbarSelected || !selectedCount) return;
+
+        const allCheckBoxes = container.querySelectorAll('tbody [type="checkbox"]');
+        let count = 0;
+        allCheckBoxes.forEach(c => { if (c.checked) count++; });
+
+        if (count > 0) {
+            selectedCount.innerHTML = count;
+            toolbarBase.classList.add('d-none');
+            toolbarSelected.classList.remove('d-none');
+        } else {
+            toolbarBase.classList.remove('d-none');
+            toolbarSelected.classList.add('d-none');
+        }
+    }
+
+    return {
+        init: function () {
+            initDatatable();
+            handleSearchDatatable();
+        }
+    }
+}();
+
+KTUtil.onDOMContentLoaded(function () {
+    KTDatatablesServerSide.init();
+
+    const addBtn = document.querySelector('a[href*="/create"]');
+    if (addBtn && "{{ auth()->user()->role }}" == 2) {
+        fetch("{{ url('api/admin/p_k_m_student_habits/check-today') }}", {
+            headers: {
+                'Authorization': 'Bearer {{ session('bearer_token') ?? '' }}',
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (!data.canAdd) {
+                addBtn.classList.add('disabled');
+                addBtn.style.pointerEvents = 'none';
+                addBtn.style.opacity = '0.6';
+                addBtn.innerHTML = '<i class="fas fa-ban me-1"></i> Sudah Input Hari Ini';
+            }
+        })
+        .catch(err => console.error(err));
+    }
+});
+</script>
 @endsection

@@ -32,7 +32,7 @@ class PKMStudentHabits extends Resources
             'name' => 'student_id',
             'required' => true,
             'column' => 3,
-            'label' => 'Student',
+            'label' => 'Nama Murid',
             'type' => 'select2',
             'options' => [
                 'model' => 'users',       // ✅ sekarang ambil dari tabel users
@@ -45,7 +45,7 @@ class PKMStudentHabits extends Resources
             'name' => 'habit_id',
             'required' => true,
             'column' => 3,
-            'label' => 'Habit',
+            'label' => 'Kebiasaan',
             'type' => 'select2',
             'options' => [
                 'model' => 'p_k_m_habits',
@@ -58,7 +58,7 @@ class PKMStudentHabits extends Resources
             'name' => 'date',
             'required' => true,
             'column' => 3,
-            'label' => 'Date',
+            'label' => 'Tanggal',
             'type' => 'date',
             'display' => true,
         ],
@@ -66,7 +66,7 @@ class PKMStudentHabits extends Resources
             'name' => 'is_checked',
             'required' => false,
             'column' => 2,
-            'label' => 'Is Checked',
+            'label' => 'Ter Ceklis',
             'type' => 'checkbox',
             'display' => true,
         ],

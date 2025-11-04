@@ -93,7 +93,7 @@ class PKMStudentHabitsController extends AppController
             }
 
             DB::commit();
-            return redirect('admin/student_habits')->with('success', 'Data student habits berhasil disimpan!');
+            return redirect('admin/p_k_m_student_habits')->with('success', 'Data student habits berhasil disimpan!');
         } catch (Exception $e) {
             // dd($e);
             DB::rollBack();
@@ -119,7 +119,7 @@ class PKMStudentHabitsController extends AppController
             "habit" => $habit
         ];
 
-        return view('backend.student_habits.edit', compact('data'));
+        return view('backend.p_k_m_student_habits.edit', compact('data'));
     }
 
     public function update(Request $request)
@@ -139,7 +139,7 @@ class PKMStudentHabitsController extends AppController
             $habit->update($validated);
 
             DB::commit();
-            return redirect('admin/student_habits/list')->with('success', 'Data student habit berhasil diperbarui!');
+            return redirect('admin/p_k_m_student_habits/list')->with('success', 'Data student habit berhasil diperbarui!');
         } catch (Exception $e) {
             DB::rollBack();
             return back()->withInput()->withErrors('Update failed: ' . $e->getMessage());

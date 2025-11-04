@@ -40,7 +40,6 @@ class PKMHabits extends Resources
     ];
 
     protected $fillable = [
-        'id',
         'habit_name',
         'habit_description',
     ];

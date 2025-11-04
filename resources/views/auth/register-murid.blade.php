@@ -33,12 +33,12 @@
                             @csrf
 
                             <div class="flex justify-center text-center mb-6">
-                                <h1 class="fw-bold text-dark">Register</h1>
+                                <h1 class="fw-bold text-dark">Daftar</h1>
                             </div>
 
                             <div class="mb-3 fv-row form-floating">
-                                <input type="text" name="name" class="form-control bg-transparent" placeholder="Full Name" value="{{ old('name') }}" required>
-                                <label>Full Name</label>
+                                <input type="text" name="name" class="form-control bg-transparent" placeholder="Nama Lengkap" value="{{ old('name') }}" required>
+                                <label>Nama Lengkap</label>
                             </div>
 
                             <div class="mb-3 fv-row form-floating">
@@ -62,7 +62,7 @@
                                     <option value="Male" {{ old('gender') == 'Male' ? 'selected' : '' }}>Laki-Laki</option>
                                     <option value="Female" {{ old('gender') == 'Female' ? 'selected' : '' }}>Perempuan</option>
                                 </select>
-                                <label>Gender</label>
+                                <label>Jenis Kelamin</label>
                             </div>
 
                             <div class="mb-3 fv-row form-floating">
@@ -72,17 +72,17 @@
                                     class="form-control bg-transparent"
                                     rows="3"
                                 >{{ old('address') }}</textarea>
-                                <label>Address</label>
+                                <label>Alamat</label>
                             </div>
 
                             <div class="mb-3 fv-row form-floating">
-                                <input type="text" name="phone_number" class="form-control bg-transparent" placeholder="Phone Number" value="{{ old('phone_number') }}" required>
-                                <label>Phone Number</label>
+                                <input type="text" name="phone_number" class="form-control bg-transparent" placeholder="Nomor Telepon" value="{{ old('phone_number') }}" required>
+                                <label>Nomor Telepon</label>
                             </div>
 
                             <div class="mb-3 fv-row form-floating position-relative">
                                 <input type="password" name="password" id="register_password" class="form-control bg-transparent" placeholder="Password" required>
-                                <label>Password</label>
+                                <label>Kata Sandi</label>
                                 <button type="button"
                                     class="btn btn-sm btn-light position-absolute top-50 end-0 translate-middle-y me-3"
                                     style="z-index:2;"
@@ -94,13 +94,13 @@
                             </div>
 
                             <div class="mb-3 fv-row form-floating position-relative">
-                                <input type="password" name="password_confirmation" id="register_password_confirm" class="form-control bg-transparent" placeholder="Confirm Password" required>
-                                <label>Confirm Password</label>
+                                <input type="password" name="password_confirmation" id="register_password_confirm" class="form-control bg-transparent" placeholder="Konfirmasi Kata Sandi" required>
+                                <label>Konfirmasi Kata Sandi</label>
                             </div>
 
                             <div class="mb-10 d-grid">
                                 <button type="submit" class="btn btn-dark py-3 fw-bold">
-                                    {{ __('Register') }}
+                                    {{ __('Daftar') }}
                                 </button>
                             </div>
 

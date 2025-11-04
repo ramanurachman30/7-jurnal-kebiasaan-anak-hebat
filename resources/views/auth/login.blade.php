@@ -40,7 +40,7 @@
                                 @method('POST')
                                 @csrf
                                 <div class="flex justify-center text-center mb-6">
-                                    <h1>Login Page</h1>
+                                    <h1>Halaman Login</h1>
                                     {{-- <img alt="Logo" src="{{ asset('assets/media/logos/LogoSyncTrans2 1.png') }}"
                                         class="h-[180px] lg:h-[90px]" /> --}}
                                 </div>
@@ -77,7 +77,7 @@
                                         type="text"
                                         name="email"
                                         id="email"
-                                        placeholder="{{ __('Email address') }}"
+                                        placeholder="{{ __('Email') }}"
                                         autocomplete="off"
                                         value="{{ old('email') }}"
                                         class="w-full border border-gray-300 px-5 py-4 text-gray-900 rounded-lg"
@@ -89,7 +89,7 @@
                                         type="password" 
                                         name="password"
                                         id="login_password" 
-                                        placeholder="{{ __('Password') }}"
+                                        placeholder="{{ __('Kata Sandi') }}"
                                         class="w-full border border-gray-300 px-5 py-4 text-gray-900 rounded-lg"
                                     />
 
@@ -104,27 +104,11 @@
 
 
                                 {{-- <div class="g-recaptcha" data-sitekey="6LcQL4IrAAAAAAep9gz_ZY9q9S0VBhf7eM2BCfBy"></div> --}}
-                                <div class="flex-wrap gap-3 mb-8 d-flex flex-stack fs-base fw-semibold">
-                                    <div class="block mt-4">
-                                        <div class="flex items-center gap-4">
-                                            <input id="remember_me" name="remember" type="checkbox"
-                                                class="sm:w-[32px] sm:h-[32px] lg:w-[24px] lg:h-[24px] rounded-lg border-gray-300 text-amber-600 focus:ring-amber-500" />
-                                            <label for="remember_me" class="sm:text-xl lg:text-lg text-gray-700">
-                                                {{ __('Remember me') }}
-                                            </label>
-                                        </div>
-                                        <div class="fv-plugins-message-container invalid-feedback"></div>
-                                    </div>
-                                    <a href="{{ url('forgot-password') }}"
-                                        class="link-warning text-dark sm:text-xl lg:text-lg">
-                                        {{ __('Forgot Password') }}?
-                                    </a>
-                                </div>
                                 <div class="mb-10 d-grid">
                                     <button type="submit" id="kt_sign_in_submit"
                                         class="sm:px-5 py-4 bg-dark text-white rounded-lg!">
-                                        <span class="text-4xl lg:text-lg font-semibold indicator-label">{{ __('Sign In') }}</span>
-                                        <span class="text-4xl lg:text-lg font-semibold indicator-progress">{{ __('Please wait') }}...
+                                        <span class="text-4xl lg:text-lg font-semibold indicator-label">{{ __('Login') }}</span>
+                                        <span class="text-4xl lg:text-lg font-semibold indicator-progress">{{ __('Loading') }}...
                                             <span class="align-middle spinner-border spinner-border-sm ms-2"></span></span>
                                     </button>
                                 </div>
