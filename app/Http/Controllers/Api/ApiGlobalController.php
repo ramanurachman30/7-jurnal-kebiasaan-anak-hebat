@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Files;
 use App\Models\Invitation;
+use App\Models\PKMStudentHabits;
 use App\Models\Resources;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Exception;
@@ -533,5 +534,28 @@ class ApiGlobalController extends Controller
         if (empty($request->title)) return response(['slug' => '']);
         $slug =  SlugService::createSlug($this->model, 'slug', $request->title);
         return response(['slug' => $slug]);
+    }
+
+    public function checkToday(Request $request)
+    {
+        $user = auth()->user();
+
+        // hanya untuk murid
+        if ($user->role != 2) {
+            return response()->json(['canAdd' => true]);
+        }
+
+        // gunakan timezone lokal
+        $today = now('Asia/Jakarta')->toDateString();
+
+        // jika user mengirim tanggal tertentu, gunakan itu
+        $date = $request->input('date', $today);
+
+        // cek apakah sudah ada data untuk tanggal tersebut
+        $exists = PKMStudentHabits::where('student_id', $user->id)
+            ->whereDate('date', $date)
+            ->exists();
+
+        return response()->json(['canAdd' => !$exists]);
     }
 }

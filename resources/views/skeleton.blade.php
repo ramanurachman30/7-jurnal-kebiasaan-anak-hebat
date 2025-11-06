@@ -28,6 +28,7 @@ License: For each use you must have a valid license purchased only from above li
     @yield('meta')
     <link rel="shortcut icon" href="{{ asset('assets/media/logos/favicon.ico') }}" />
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     {{-- <link rel="stylesheet" href="{{ asset('assets/') }}"> --}}
     @yield('customcss')
     @include('metronic/css')
@@ -48,7 +49,7 @@ License: For each use you must have a valid license purchased only from above li
     <div class="app-page-loader page-loader-logo d-block">
         <div class="d-flex align-items-center justify-content-center flex-column h-100">
             <img alt="Logo" class="max-h-110px logo-spinner"
-                src="{{ asset('assets/media/pkm/2b5617d3-3c9f-4778-b08d-7e5790ec928a_980x979.png') }}" width="80">
+                src="{{ asset('assets/media/pkm/LogoSekolah.jpg') }}" width="80">
                 &nbsp;
                 <h1>7 Kebiasaan Anak Hebat Indonesia</h1>
             <div class="mt-5 spinner-border text-warning" role="status">
@@ -79,7 +80,7 @@ License: For each use you must have a valid license purchased only from above li
                     </div>
                     <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
                         <a href="{{ url('dashboard') }}" class="d-lg-none">
-                            <img alt="Logo" src="{{ asset('assets/media/logos/logo-id.PNG') }}"
+                            <img alt="Logo" src="{{ asset('assets/media/pkm/LogoSekolah.jpg') }}"
                                 class="h-30px" />
                         </a>
                     </div>

@@ -27,7 +27,7 @@
             {{-- <div class="px-10 d-flex flex-center w-lg-50 pt-15 pt-lg-0">
                 <div class="d-flex flex-center flex-lg-start flex-column">
                     <a href="#" class="mb-7">
-                        <img alt="Logo" src="{{ asset('assets/media/logos/logo-id.PNG') }}" width="100%" />
+                        <img alt="Logo" src="{{ asset('assets/media/pkm/LogoSekolah.jpg') }}" width="100%" />
                     </a>
                 </div>
             </div> --}}
@@ -39,10 +39,9 @@
                                 action="{{ route('login') }}" method="POST">
                                 @method('POST')
                                 @csrf
-                                <div class="flex justify-center text-center mb-6">
+                                <div class="mb-6 row justify-content-center text-center">
+                                    <img alt="Logo" src="{{ asset('assets/media/pkm/LogoSekolah.jpg') }}" class="w-25 h-25" />
                                     <h1>Halaman Login</h1>
-                                    {{-- <img alt="Logo" src="{{ asset('assets/media/logos/LogoSyncTrans2 1.png') }}"
-                                        class="h-[180px] lg:h-[90px]" /> --}}
                                 </div>
                                 {{-- <div class="mb-5 fv-row form-floating">
                                     <input type="text" placeholder="Email" name="email" autocomplete="off"

@@ -32,8 +32,9 @@
                         <form class="form w-100" method="POST" action="{{ route('register') }}">
                             @csrf
 
-                            <div class="flex justify-center text-center mb-6">
-                                <h1 class="fw-bold text-dark">Daftar</h1>
+                            <div class="mb-6 row justify-content-center text-center">
+                                <img alt="Logo" src="{{ asset('assets/media/pkm/LogoSekolah.jpg') }}" class="w-25 h-25" />
+                                <h1>Daftar</h1>
                             </div>
 
                             <div class="mb-3 fv-row form-floating">

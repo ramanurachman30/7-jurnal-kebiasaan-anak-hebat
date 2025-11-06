@@ -18,10 +18,15 @@ class PKMStudentHabitsController extends ApiGlobalController
             return response()->json(['canAdd' => true]);
         }
 
-        $today = now()->toDateString();
+        // gunakan timezone lokal
+        $today = now('Asia/Jakarta')->toDateString();
 
+        // jika user mengirim tanggal tertentu, gunakan itu
+        $date = $request->input('date', $today);
+
+        // cek apakah sudah ada data untuk tanggal tersebut
         $exists = PKMStudentHabits::where('student_id', $user->id)
-            ->whereDate('date', $today)
+            ->whereDate('date', $date)
             ->exists();
 
         return response()->json(['canAdd' => !$exists]);

@@ -278,7 +278,7 @@ KTUtil.onDOMContentLoaded(function () {
 
     const addBtn = document.querySelector('a[href*="/create"]');
     if (addBtn && "{{ auth()->user()->role }}" == 2) {
-        fetch("{{ url('api/admin/p_k_m_student_habits/check-today') }}", {
+        fetch(`{{ url('api/admin/'.Request::segment(2)) }}/check-today`, {
             headers: {
                 'Authorization': 'Bearer {{ session('bearer_token') ?? '' }}',
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

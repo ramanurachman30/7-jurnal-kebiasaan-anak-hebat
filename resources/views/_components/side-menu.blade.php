@@ -5,11 +5,11 @@
         <div class="row">
             <div class="col-4">
                 <a href="{{ url('dashboard') }}">
-                    <img alt="Logo" src="{{ asset('assets/media/pkm/2b5617d3-3c9f-4778-b08d-7e5790ec928a_980x979.png') }}"
+                    <img alt="Logo" src="{{ asset('assets/media/pkm/LogoSekolah.jpg') }}"
                         class="w-100 app-sidebar-logo-default theme-light-show">
-                    <img alt="Logo" src="{{ asset('assets/media/pkm/2b5617d3-3c9f-4778-b08d-7e5790ec928a_980x979.png') }}"
+                    <img alt="Logo" src="{{ asset('assets/media/pkm/LogoSekolah.jpg') }}"
                         class="w-100 app-sidebar-logo-default theme-dark-show">
-                    <img alt="Logo" src="{{ asset('assets/media/pkm/2b5617d3-3c9f-4778-b08d-7e5790ec928a_980x979.png') }}"
+                    <img alt="Logo" src="{{ asset('assets/media/pkm/LogoSekolah.jpg') }}"
                         class="h-100 app-sidebar-logo-minimize">
                 </a>
             </div>

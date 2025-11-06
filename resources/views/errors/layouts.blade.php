@@ -16,7 +16,7 @@
     <div class="container">
         <div class="d-flex align-items-center justify-content-center h-100">
             <div class="text-center">
-                <img alt="Logo" src="{{ asset('assets/media/logos/logo-id.PNG') }}" height="110" />
+                <img alt="Logo" src="{{ asset('assets/media/pkm/LogoSekolah.jpg') }}" height="110" />
                 <h1 class="my-4">@yield('code')</h1>
                 <h3 class="mb-4">@yield('title')</h3>
                 {{-- <p>@yield('message')</p> --}}

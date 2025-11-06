@@ -81,8 +81,22 @@ class PKMStudentHabitsController extends AppController
                 'date' => 'required|date',
                 'habits' => 'required|array',
             ]);
-            // dd($validated);
 
+            // Pastikan hanya murid yang dicek (role 2)
+            $user = auth()->user();
+            if ($user->role == 2) {
+                $exists = PKMStudentHabits::where('student_id', $validated['student_id'])
+                    ->whereDate('date', $validated['date'])
+                    ->exists();
+
+                if ($exists) {
+                    return back()
+                        ->withInput()
+                        ->withErrors(['msg' => 'Kamu sudah mengisi checklist untuk tanggal ini.']);
+                }
+            }
+
+            // Simpan data jika belum ada
             foreach ($validated['habits'] as $habit_id) {
                 PKMStudentHabits::create([
                     'student_id' => $validated['student_id'],
@@ -93,17 +107,18 @@ class PKMStudentHabitsController extends AppController
             }
 
             DB::commit();
-            return redirect('admin/p_k_m_student_habits')->with('success', 'Data student habits berhasil disimpan!');
+
+            return redirect('admin/p_k_m_student_habits')
+                ->with('success', 'Data kebiasaan siswa berhasil disimpan!');
         } catch (Exception $e) {
-            // dd($e);
             DB::rollBack();
+
             Log::error('Store StudentHabit Error', [
                 'message' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
             ]);
-            dd($e);
 
-            // return back()->withInput()->withErrors('Terjadi kesalahan: ' . $e->getMessage());
+            return back()->withInput()->withErrors('Terjadi kesalahan: ' . $e->getMessage());
         }
     }
 
