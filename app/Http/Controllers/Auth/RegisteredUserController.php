@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\PKMGrades;
+use App\Models\PKMStudents;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -20,7 +22,9 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
-        return view('auth.register-murid');
+        $grades = PKMGrades::get();
+        // dd($grades);
+        return view('auth.register-murid', compact('grades'));
     }
 
     /**
@@ -41,6 +45,7 @@ class RegisteredUserController extends Controller
             'address' => ['required', 'string', 'max:255'],
             'phone_number' => ['required', 'string', 'max:255'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'grade_id' => ['required', 'integer', 'exists:p_k_m_grades,id'],
         ]);
 
         $user = User::create([
@@ -53,12 +58,21 @@ class RegisteredUserController extends Controller
             'role' => '2',
             'password' => Hash::make($request->password),
         ]);
+
+        PKMStudents::create([
+            'student_name' => $request->name,
+            'user_id' => $user->id,
+            // Kalau ada input grade, pakai ini:
+            'grade_id' => $request->grade_id,
+            // Kalau tidak, biarkan null:
+            // 'grade_id' => null,
+        ]);
         // dd($user);
 
         event(new Registered($user));
 
-        Auth::login($user);
+        // Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        return redirect()->intended(RouteServiceProvider::HOME)->with("success", __('Kamu Berhasil Registrasi') . " " . Auth::user()->name);
     }
 }

@@ -39,12 +39,12 @@ class PKMStudents extends Resources
             'options' => [
                 'model' => 'users',
                 'key' => 'id',
-                'display' => 'first_name',
+                'display' => 'name',
             ],
             'display' => true,
         ],
         [
-            'name' => 'grade_id',
+            'name' => 'grade',
             'required' => true,
             'column' => 2,
             'label' => 'Grade',
@@ -67,7 +67,7 @@ class PKMStudents extends Resources
 
     protected $reference = [
         'user_id',
-        'grade_id',
+        'grade',
     ];
 
     public function getFields()
@@ -88,9 +88,9 @@ class PKMStudents extends Resources
     {
         return false;
     }
-    public function grade_id()
+    public function grade()
     {
-        return $this->belongsTo(PKMGrades::class, 'grade_id', 'id');
+        return $this->belongsTo(PKMGrades::class, 'grade_id');
     }
     public function user_id()
     {

@@ -112,11 +112,12 @@
                                     </button>
                                 </div>
                                 <div class="d-grid text-center">
+                                    {{ __('Belum punya akun?') }}
                                     <a 
                                         class="underline text-lg text-gray-600 hover:text-gray-900" 
-                                        href="{{ route('register') }}"
+                                        href="{{ route('createRegister') }}"
                                     >
-                                        {{ __('Belum punya akun?') }}
+                                        Daftar disini
                                     </a>
                                 </div>
                             </form>

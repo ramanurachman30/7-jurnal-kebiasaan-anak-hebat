@@ -8,6 +8,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PKMStudentHabitsController;
+use App\Http\Controllers\PKMStudentsController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\UserController;
@@ -36,10 +37,9 @@ Route::get("/", function () {
     return view("auth.login");
 });
 
-Route::get('/register', function () {
-    return view('auth.register-murid');
-});
 
+
+Route::get('/register', [RegisteredUserController::class, 'create'])->name('createRegister');
 Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');
 
 Route::controller(ErrorControler::class)->prefix('error')
@@ -193,6 +193,14 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
             Route::post('/', 'store')->name('store');
             Route::get('/{id}/edit', 'edit')->name('edit');
             Route::put('/{id}', 'update')->name('edit');
+        });
+
+        Route::controller(PKMStudentsController::class)
+        ->prefix('p_k_m_students')
+        ->name('p_k_m_students.')
+        ->group(function () {
+            Route::get('/', 'list')->name('list');
+            Route::post('/datatable', 'datatable')->name('datatable');
         });
 
         // If you want to custom, please write above

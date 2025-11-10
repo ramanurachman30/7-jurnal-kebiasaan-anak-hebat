@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('grade_name');
             $table->string('grade_code');
+            $table->integer('level_order');
+            $table->string('description')->nullable();
             $table->owners();
         });
     }

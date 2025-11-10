@@ -23,16 +23,28 @@
             <!--end:Menu link-->
         </div>
     @endif
-    {{-- @if (Auth::allowedUri('p_k_m_student_habits.list'))
+    @if (Auth::allowedUri('p_k_m_students.list'))
         <div class="menu-item position-relative">
             <!--begin:Menu link-->
-            <a class="menu-link" href="{{ url('admin/p_k_m_student_habits') }}">
+            <a class="menu-link" href="{{ url('admin/p_k_m_students') }}">
                 <span class="menu-icon">
                     <i class="bi bi-arrows-fullscreen"></i>
                 </span>
-                <span class="menu-title">{{ __('Rekap Jurnal Harian Siswa') }}</span>
+                <span class="menu-title">{{ __('Master Murid') }}</span>
             </a>
             <!--end:Menu link-->
         </div>
-    @endif --}}
+    @endif
+    @if (Auth::allowedUri('p_k_m_grades.list'))
+        <div class="menu-item position-relative">
+            <!--begin:Menu link-->
+            <a class="menu-link" href="{{ url('admin/p_k_m_grades') }}">
+                <span class="menu-icon">
+                    <i class="bi bi-arrows-fullscreen"></i>
+                </span>
+                <span class="menu-title">{{ __('Master Kelas') }}</span>
+            </a>
+            <!--end:Menu link-->
+        </div>
+    @endif
 @endif

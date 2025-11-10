@@ -65,6 +65,20 @@
                                 </select>
                                 <label>Jenis Kelamin</label>
                             </div>
+                            <div class="mb-3 fv-row form-floating">
+                                <select 
+                                    id="grade_id" 
+                                    name="grade_id" 
+                                    required
+                                    class="form-control bg-transparent"
+                                >
+                                    <option value="">Pilih Kelas</option>
+                                    @foreach($grades as $grade)
+                                        <option value="{{ $grade->id }}">{{ $grade->grade_name }}</option>
+                                    @endforeach
+                                </select>
+                                <label>Kelas</label>
+                            </div>
 
                             <div class="mb-3 fv-row form-floating">
                                 <textarea 

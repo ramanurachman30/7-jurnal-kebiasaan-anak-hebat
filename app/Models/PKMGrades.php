@@ -17,6 +17,8 @@ class PKMGrades extends Resources
     protected $rules = [
         'grade_name' => ['required', 'string', 'max:50'],
         'grade_code' => ['required', 'string', 'max:50'],
+        'level_order' => ['required','unique', 'int'],
+        'description' => ['required', 'string', 'max:50'],
     ];
 
     protected $forms = [
@@ -36,12 +38,30 @@ class PKMGrades extends Resources
             'type' => 'text',
             'display' => true
         ],
+        [
+            'name' => 'level_order',
+            'required' => true,
+            'column' => 2,
+            'label' => 'Level Kelas',
+            'type' => 'number',
+            'display' => false
+        ],
+        [
+            'name' => 'description',
+            'required' => true,
+            'column' => 2,
+            'label' => 'Deskripsi',
+            'type' => 'text',
+            'display' => true
+        ],
     ];
 
     protected $fillable = [
         'id',
         'grade_name',
         'grade_code',
+        'level_order',
+        'description',
     ];
 
     public function getFields()

@@ -35,7 +35,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
         $this->createToken();
-        return redirect()->intended(RouteServiceProvider::HOME)->with("success", __('Wellcome back') . " " . Auth::user()->first_name . ' ' . Auth::user()->last_name);
+        return redirect()->intended(RouteServiceProvider::HOME)->with("success", __('Selamat Datang Kembali') . " " . Auth::user()->name);
     }
 
     public function createToken()
@@ -77,6 +77,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/')->with('success', __('Good bye') . ' ' . $user . ' ...');
+        return redirect('/')->with('success', __('Selamat Tinggal') . ' ' . $user . ' ...');
     }
 }

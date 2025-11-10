@@ -63,8 +63,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::controller(ApiGlobalController::class)->prefix('admin/{collection}')->name(request()->segment(3) . '.')->group(function () {
         Route::post('/datatable', 'dataTable')->name('datatable');
+        Route::post('/dataTableMurid', 'dataTableMurid')->name('dataTableMurid');
         Route::get('/datatable_iipc', 'dataTableIipc')->name('datatable_iipc');
         Route::get('/check-today', 'checkToday')->name('check-today');
+        Route::post('/{id}/naikKelasPerMurid', 'naikKelasPerMurid')->name('naikKelasPerMurid');
 
         Route::post('/{id}', 'delete')->name('delete');
         Route::post('/{id}/trash', 'trash')->name('trash');

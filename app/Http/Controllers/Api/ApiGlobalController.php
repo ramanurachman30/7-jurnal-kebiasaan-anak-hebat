@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Files;
 use App\Models\Invitation;
+use App\Models\PKMGrades;
 use App\Models\PKMStudentHabits;
+use App\Models\PKMStudents;
 use App\Models\Resources;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Exception;
@@ -186,6 +188,214 @@ class ApiGlobalController extends Controller
         ];
 
         return response($data);
+    }
+
+    public function dataTableMurid(Request $request)
+    {
+        $reference = $this->reference;
+        $offset = $request->get('start') ? $request->get('start') : 0;
+        $limit = $request->get('length') ? $request->get('length') : 10;
+        $search = $request->get('search');
+        $orderBy = $request->get('order');
+        $params = $request->get('params');
+        $status = $request->get('status');
+
+        // Tambahan filter tanggal
+        $startDate = $request->get('start_date');
+        $endDate = $request->get('end_date');
+
+        $model = $this->model;
+        $fields = $model->getFields();
+
+        $forms = ['id'];
+        foreach ($this->forms as $items) {
+            if ($items['display']) $forms[] = $items['name'];
+        }
+
+        if ($status == 2) {
+            $model = $model->onlyTrashed();
+        }
+
+        if (count($reference) > 0) {
+            for ($i = 0; $i < count($reference); $i++) {
+                $model = $model->with($reference[$i]);
+            }
+        }
+
+        // 🔍 Filter pencarian global
+        if (!empty($search)) {
+            $table = $this->model->getTable();
+            $columnsInfo = [];
+            foreach ($fields as $field) {
+                $columnsInfo[$field] = DB::getSchemaBuilder()->getColumnType($table, $field);
+            }
+
+            $model = $model->where(function ($query) use ($fields, $search, $columnsInfo, $reference) {
+                foreach ($fields as $key => $item) {
+                    if (isset($columnsInfo[$item]) && in_array($columnsInfo[$item], ['varchar', 'text'])) {
+                        if ($key == 0) {
+                            $query->where($item, 'LIKE', '%' . $search . '%');
+                        } else {
+                            $query->orWhere($item, 'LIKE', '%' . $search . '%');
+                        }
+                    }
+                }
+
+                foreach ($reference as $relation) {
+                    if (method_exists($this->model, $relation)) {
+                        $displayField = null;
+                        foreach ($this->forms as $form) {
+                            if ($form['name'] === $relation && isset($form['options']['display'])) {
+                                $displayField = $form['options']['display'];
+                                break;
+                            }
+                        }
+
+                        if (!$displayField) {
+                            $displayField = 'name';
+                        }
+
+                        $query->orWhereHas($relation, function ($q) use ($search, $displayField) {
+                            $q->where($displayField, 'LIKE', '%' . $search . '%');
+                        });
+                    }
+                }
+            });
+        }
+
+        // 🔹 Filter berdasarkan parameter tambahan
+        if (!empty($params)) {
+            foreach ($params as $key => $item) {
+                if (!empty($item)) $model = $model->where($key, $item);
+            }
+        }
+
+        // 🔹 Filter tanggal
+        if (!empty($startDate) && !empty($endDate)) {
+            $model = $model->whereBetween('created_at', [$startDate . ' 00:00:00', $endDate . ' 23:59:59']);
+        } elseif (!empty($startDate)) {
+            $model = $model->whereDate('created_at', '>=', $startDate);
+        } elseif (!empty($endDate)) {
+            $model = $model->whereDate('created_at', '<=', $endDate);
+        }
+
+        // 🔹 Filter hanya user dengan role "murid"
+        $model = $model->whereHas('user_id', function ($q) {
+            $q->where('role', 2);
+        });
+
+        // 🔹 Jika yang login murid, hanya tampilkan datanya sendiri
+        $user = auth()->user();
+        if ($user && $user->role == 2) {
+            $model = $model->where('user_id', $user->id);
+        }
+
+        // 🔹 Hitung total data
+        $total = $model->count();
+
+        // 🔹 Sorting
+        if (!empty($orderBy)) {
+            $model = $model->orderBy(
+                $forms[$request->get('order')[0]['column']],
+                $request->get('order')[0]['column'] == 0 ? 'desc' : $request->get('order')[0]['dir']
+            );
+        }
+
+        // 🔹 Pagination
+        $model = $model->offset($offset)->limit($limit)->get();
+
+        // 🔹 Mapping form untuk display
+        $forms = [];
+        foreach ($this->forms as $items) {
+            $forms[$items['name']]['type'] = $items['type'];
+            $forms[$items['name']]['option'] = isset($items['options']) ? $items['options'] : [];
+        }
+
+        // 🔹 Konversi data ke format DataTable
+        $dataTable = [];
+        foreach ($model->toArray() as $key => $items) {
+            foreach ($items as $q => $value) {
+                if (isset($forms[$q]) && $forms[$q]['type'] == 'thumbnail') {
+                    $dataTable[$key][$q] = $this->thumbnail($value);
+                } elseif (isset($forms[$q]) && $forms[$q]['type'] == 'select2') {
+                    $displayProperty = $forms[$q]['option']['display'];
+                    $dataTable[$key][$q] = !empty($value) ? $value[$displayProperty] : null;
+                } elseif (isset($forms[$q]) && $forms[$q]['type'] == 'select') {
+                    $dataTable[$key][$q] = !empty($value) && isset($forms[$q]['option'][$value])
+                        ? $forms[$q]['option'][$value]
+                        : $value;
+                } else {
+                    $dataTable[$key][$q] = is_string($value) ? strip_tags($value) : $value;
+                }
+            }
+        }
+
+        // 🔹 Output JSON DataTables
+        $draw = $request->get('draw') ?? 1;
+
+        return response([
+            'draw' => $draw,
+            'recordsTotal' => $total,
+            'recordsFiltered' => $total,
+            'data' => $dataTable
+        ]);
+    }
+
+    public function naikKelasPerMurid($collection, $id)
+    {
+        DB::beginTransaction();
+
+        try {
+            // Ambil data murid berdasarkan ID
+            $student = PKMStudents::findOrFail($id);
+
+            // Ambil data grade sekarang
+            $currentGrade = PKMGrades::find($student->grade_id);
+
+            if (!$currentGrade) {
+                return response()->json([
+                    'status' => 400,
+                    'message' => "❌ Murid belum memiliki kelas saat ini."
+                ]);
+            }
+
+            // Ambil grade tertinggi (kelas terakhir)
+            $maxGrade = PKMGrades::orderByDesc('level_order')->first();
+
+            // Cek apakah murid sudah di kelas terakhir
+            if ($currentGrade->id === $maxGrade->id) {
+                return response()->json([
+                    'status' => 400,
+                    'message' => "⚠️ Murid sudah berada di kelas tertinggi ({$currentGrade->grade_name})."
+                ]);
+            }
+
+            // Ambil kelas berikutnya berdasarkan level_order
+            $nextGrade = PKMGrades::where('level_order', $currentGrade->level_order + 1)->first();
+
+            if (!$nextGrade) {
+                return response()->json([
+                    'status' => 400,
+                    'message' => "⚠️ Kelas berikutnya tidak ditemukan."
+                ]);
+            }
+
+            // Update grade_id murid
+            $student->update(['grade_id' => $nextGrade->id]);
+
+            DB::commit();
+
+            return response()->json([
+                'status' => 200,
+                'message' => "✅ Murid berhasil naik ke kelas <b>{$nextGrade->grade_name}</b>."
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'status' => 500,
+                'message' => "❌ Terjadi kesalahan: " . $e->getMessage()
+            ]);
+        }
     }
 
     public function dataTableUser(Request $request)
