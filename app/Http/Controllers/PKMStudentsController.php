@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PKMGrades;
 use App\Models\PKMStudents;
 use Exception;
 use Illuminate\Http\Request;
@@ -45,10 +46,15 @@ class PKMStudentsController extends AppController
 
     public function list()
     {
-        $this->view = view('backend.students.list', ['forms' => $this->forms]);
+        $grades = PKMGrades::get();
+        $this->view = view('backend.students.list', [
+            'forms' => $this->forms,
+            'grades' => $grades,
+        ]);
         return $this->view->with([
             'forms' => $this->forms,
             'segmentName' => $this->segmentName,
+            'grades' => $grades
         ]);
     }
 }

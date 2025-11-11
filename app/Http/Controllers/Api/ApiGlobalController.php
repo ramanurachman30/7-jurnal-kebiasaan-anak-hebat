@@ -9,6 +9,7 @@ use App\Models\PKMGrades;
 use App\Models\PKMStudentHabits;
 use App\Models\PKMStudents;
 use App\Models\Resources;
+use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Exception;
 use Illuminate\Http\Request;
@@ -49,16 +50,16 @@ class ApiGlobalController extends Controller
     public function dataTable(Request $request)
     {
         $reference = $this->reference;
-        $offset = $request->get('start') ? $request->get('start') : 0;
-        $limit = $request->get('length') ? $request->get('length') : 10;
+        $offset = $request->get('start', 0);
+        $limit = min($request->get('length', 10), 100);
         $search = $request->get('search');
         $orderBy = $request->get('order');
         $params = $request->get('params');
         $status = $request->get('status');
 
-        // Tambahan filter tanggal
         $startDate = $request->get('start_date');
         $endDate = $request->get('end_date');
+        $kelas = $request->get('class_id');
 
         $model = $this->model;
         $fields = $model->getFields();
@@ -68,16 +69,11 @@ class ApiGlobalController extends Controller
             if ($items['display']) $forms[] = $items['name'];
         }
 
-        if ($status == 2) {
-            $model = $model->onlyTrashed();
-        }
+        if ($status == 2) $model = $model->onlyTrashed();
 
-        if (count($reference) > 0) {
-            for ($i = 0; $i < count($reference); $i++) {
-                $model = $model->with($reference[$i]);
-            }
-        }
+        foreach ($reference as $ref) $model = $model->with($ref);
 
+        // Search
         if (!empty($search)) {
             $table = $this->model->getTable();
             $columnsInfo = [];
@@ -88,58 +84,56 @@ class ApiGlobalController extends Controller
             $model = $model->where(function ($query) use ($fields, $search, $columnsInfo, $reference) {
                 foreach ($fields as $key => $item) {
                     if (isset($columnsInfo[$item]) && in_array($columnsInfo[$item], ['varchar', 'text'])) {
-                        if ($key == 0) {
-                            $query->where($item, 'LIKE', '%' . $search . '%');
-                        } else {
-                            $query->orWhere($item, 'LIKE', '%' . $search . '%');
-                        }
+                        $method = $key == 0 ? 'where' : 'orWhere';
+                        $query->$method($item, 'LIKE', "%$search%");
                     }
                 }
 
                 foreach ($reference as $relation) {
                     if (method_exists($this->model, $relation)) {
-                        $displayField = null;
-                        foreach ($this->forms as $form) {
-                            if ($form['name'] === $relation && isset($form['options']['display'])) {
-                                $displayField = $form['options']['display'];
-                                break;
-                            }
-                        }
-
-                        if (!$displayField) {
-                            $displayField = 'name';
-                        }
-
-                        $query->orWhereHas($relation, function ($q) use ($search, $displayField) {
-                            $q->where($displayField, 'LIKE', '%' . $search . '%');
-                        });
+                        $displayField = collect($this->forms)->firstWhere('name', $relation)['options']['display'] ?? 'name';
+                        $query->orWhereHas($relation, fn($q) => $q->where($displayField, 'LIKE', "%$search%"));
                     }
                 }
             });
         }
 
+        // Params
         if (!empty($params)) {
             foreach ($params as $key => $item) {
                 if (!empty($item)) $model = $model->where($key, $item);
             }
         }
 
-        // 🔹 Tambahkan filter tanggal di sini
+        // Date filter
         if (!empty($startDate) && !empty($endDate)) {
-            $model = $model->whereBetween('created_at', [$startDate . ' 00:00:00', $endDate . ' 23:59:59']);
+            $model = $model->whereBetween('created_at', [
+                Carbon::parse($startDate)->startOfDay(),
+                Carbon::parse($endDate)->endOfDay()
+            ]);
         } elseif (!empty($startDate)) {
             $model = $model->whereDate('created_at', '>=', $startDate);
         } elseif (!empty($endDate)) {
             $model = $model->whereDate('created_at', '<=', $endDate);
         }
 
-        $user = auth()->user();
-        if ($user->role == 2) { // role 2 = murid
-            $model = $model->where('student_id', $user->id);
+        if (!empty($kelas)) {
+            $model = $model->whereHas('student_id.grade', function ($q) use ($kelas) {
+                $q->where('id', $kelas);
+            });
         }
 
-        $total = $model->count();
+        // Role murid
+        $user = auth()->user();
+        $student = DB::table('p_k_m_students')->where('user_id', $user->id)->first();
+        if ($user->role == 2 && $student) {
+            $model = $model->where('student_id', $student->id);
+        }
 
+        $totalQuery = clone $model;
+        $total = $totalQuery->count();
+
+        // Order, Offset, Limit
         if (!empty($orderBy)) {
             $model = $model->orderBy(
                 $forms[$request->get('order')[0]['column']],
@@ -147,47 +141,42 @@ class ApiGlobalController extends Controller
             );
         }
 
-        $model = $model->offset($offset);
-        $model = $model->limit($limit);
-        $model = $model->get();
+        $model = $model->offset($offset)->limit($limit)->get();
 
-        $forms = [];
+        // Format output
+        $formsDef = [];
         foreach ($this->forms as $items) {
-            $forms[$items['name']]['type'] = $items['type'];
-            $forms[$items['name']]['option'] = isset($items['options']) ? $items['options'] : [];
+            $formsDef[$items['name']]['type'] = $items['type'];
+            $formsDef[$items['name']]['option'] = $items['options'] ?? [];
         }
 
         $dataTable = [];
         foreach ($model->toArray() as $key => $items) {
             foreach ($items as $q => $value) {
-                if (isset($forms[$q]) && $forms[$q]['type'] == 'thumbnail') {
-                    $dataTable[$key][$q] = $this->thumbnail($value);
-                } elseif (isset($forms[$q]) && $forms[$q]['type'] == 'select2') {
-                    $displayProperty = $forms[$q]['option']['display'];
-                    $dataTable[$key][$q] = !empty($value) ? $value[$displayProperty] : null;
-                } elseif (isset($forms[$q]) && $forms[$q]['type'] == 'select') {
-                    $dataTable[$key][$q] = !empty($value) && isset($forms[$q]['option'][$value])
-                        ? $forms[$q]['option'][$value]
-                        : $value;
+                if (isset($formsDef[$q])) {
+                    $type = $formsDef[$q]['type'];
+                    $opt = $formsDef[$q]['option'];
+                    $dataTable[$key][$q] = match ($type) {
+                        'thumbnail' => $this->thumbnail($value),
+                        'select2' => !empty($value) ? $value[$opt['display']] : null,
+                        'select' => $opt[$value] ?? $value,
+                        default => is_string($value) ? strip_tags($value) : $value
+                    };
                 } else {
-                    $dataTable[$key][$q] = is_string($value) ? strip_tags($value) : $value;
+                    $dataTable[$key][$q] = $value;
                 }
             }
+            // dd($items);
+            $dataTable[$key]['kelas'] = $items['student_id']['grade']['grade_name'] ?? '-';
+            $dataTable[$key]['grade_id'] = $items['student_id']['grade']['id'] ?? '-';
         }
 
-        $draw = 1;
-        if (!empty($request->get('draw'))) {
-            $draw = $request->get('draw');
-        }
-
-        $data = [
-            'draw' => $draw,
+        return response()->json([
+            'draw' => $request->get('draw', 1),
             'recordsTotal' => $total,
             'recordsFiltered' => $total,
             'data' => $dataTable
-        ];
-
-        return response($data);
+        ]);
     }
 
     public function dataTableMurid(Request $request)
@@ -203,6 +192,7 @@ class ApiGlobalController extends Controller
         // Tambahan filter tanggal
         $startDate = $request->get('start_date');
         $endDate = $request->get('end_date');
+        $kelas = $request->get('class_id');
 
         $model = $this->model;
         $fields = $model->getFields();
@@ -277,6 +267,10 @@ class ApiGlobalController extends Controller
             $model = $model->whereDate('created_at', '>=', $startDate);
         } elseif (!empty($endDate)) {
             $model = $model->whereDate('created_at', '<=', $endDate);
+        }
+
+        if (!empty($kelas)) {
+            $model = $model->where('grade_id', '=', $kelas);
         }
 
         // 🔹 Filter hanya user dengan role "murid"
@@ -395,6 +389,82 @@ class ApiGlobalController extends Controller
                 'status' => 500,
                 'message' => "❌ Terjadi kesalahan: " . $e->getMessage()
             ]);
+        }
+    }
+
+    public function naikKelasAll(Request $request)
+    {
+        DB::beginTransaction();
+
+        try {
+            $classId = $request->input('class_id'); // ambil filter kelas
+
+            // Ambil semua siswa, jika ada filter kelas, batasi berdasarkan kelas itu
+            $studentsQuery = PKMStudents::with('grade');
+
+            if (!empty($classId)) {
+                $studentsQuery->where('grade_id', $classId);
+            }
+
+            $students = $studentsQuery->get();
+
+            // Ambil kelas dengan level tertinggi
+            $maxGrade = PKMGrades::orderByDesc('level_order')->first();
+
+            $promotedCount = 0;
+            $skippedCount = 0;
+            $skippedStudents = [];
+
+            foreach ($students as $student) {
+                if (!$student->grade) {
+                    $skippedCount++;
+                    $skippedStudents[] = [
+                        'student_id' => $student->id,
+                        'reason' => 'Belum memiliki kelas saat ini'
+                    ];
+                    continue;
+                }
+
+                if ($student->grade->id === $maxGrade->id) {
+                    $skippedCount++;
+                    $skippedStudents[] = [
+                        'student_id' => $student->id,
+                        'grade' => $student->grade->grade_name,
+                        'reason' => 'Sudah di kelas tertinggi'
+                    ];
+                    continue;
+                }
+
+                $nextGrade = PKMGrades::where('level_order', $student->grade->level_order + 1)->first();
+
+                if ($nextGrade) {
+                    $student->update(['grade_id' => $nextGrade->id]);
+                    $promotedCount++;
+                } else {
+                    $skippedCount++;
+                    $skippedStudents[] = [
+                        'student_id' => $student->id,
+                        'reason' => 'Kelas berikutnya tidak ditemukan'
+                    ];
+                }
+            }
+
+            DB::commit();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => "✅ Naik kelas selesai!<br>"
+                    . "• Jumlah murid naik kelas: <b>{$promotedCount}</b><br>"
+                    . "• Jumlah murid dilewati: <b>{$skippedCount}</b>"
+            ]);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'status' => 'error',
+                'message' => '❌ Gagal menjalankan proses naik kelas: ' . $e->getMessage()
+            ], 500);
         }
     }
 
@@ -749,6 +819,7 @@ class ApiGlobalController extends Controller
     public function checkToday(Request $request)
     {
         $user = auth()->user();
+        $student = DB::table('p_k_m_students')->where('user_id', '=', $user->id)->first();
 
         // hanya untuk murid
         if ($user->role != 2) {
@@ -762,7 +833,7 @@ class ApiGlobalController extends Controller
         $date = $request->input('date', $today);
 
         // cek apakah sudah ada data untuk tanggal tersebut
-        $exists = PKMStudentHabits::where('student_id', $user->id)
+        $exists = PKMStudentHabits::where('student_id', $student->id)
             ->whereDate('date', $date)
             ->exists();
 

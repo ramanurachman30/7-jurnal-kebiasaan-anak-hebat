@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PKMGrades;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\PKMHabits;
@@ -51,18 +52,28 @@ class PKMStudentHabitsController extends AppController
 
     public function list()
     {
-        $this->view = view('backend.student_habits.list', ['forms' => $this->forms]);
+        $grades = PKMGrades::get();
+        // dd($grades);
+        $this->view = view('backend.student_habits.list', [
+            'forms' => $this->forms,
+            'grades' => $grades,
+        ]);
         return $this->view->with([
             'forms' => $this->forms,
             'segmentName' => $this->segmentName,
+            'grades' => $grades,
         ]);
     }
 
     public function create()
     {
+        $user = auth()->user()->id;
+        $student = DB::table('p_k_m_students')->where('user_id', '=', $user)->first();
+        // dd($student->student_name);
         $habits = PKMHabits::all();
 
         $data = [
+            "student" => $student,
             "habits" => $habits,
         ];
 

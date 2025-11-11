@@ -155,8 +155,8 @@
 
                 <div class="form-group mb-3">
                     <label class="form-label">👧 Nama Siswa</label>
-                    <input type="text" class="form-control" value="{{ auth()->user()->name }}" readonly>
-                    <input type="hidden" name="student_id" value="{{ auth()->user()->id }}">
+                    <input type="text" class="form-control" value="{{ $data['student']->student_name }}" readonly>
+                    <input type="hidden" name="student_id" value="{{ $data['student']->id }}">
                 </div>
 
                 <div class="mb-3">

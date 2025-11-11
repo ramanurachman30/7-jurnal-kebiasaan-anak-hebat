@@ -67,6 +67,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/datatable_iipc', 'dataTableIipc')->name('datatable_iipc');
         Route::get('/check-today', 'checkToday')->name('check-today');
         Route::post('/{id}/naikKelasPerMurid', 'naikKelasPerMurid')->name('naikKelasPerMurid');
+        Route::post('/naikKelasAll', 'naikKelasAll')->name('naikKelasAll');
 
         Route::post('/{id}', 'delete')->name('delete');
         Route::post('/{id}/trash', 'trash')->name('trash');

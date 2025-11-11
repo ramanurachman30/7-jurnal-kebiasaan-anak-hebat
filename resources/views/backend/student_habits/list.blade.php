@@ -49,6 +49,15 @@
                         <label>Sampai Tanggal:</label>
                         <input type="date" id="endDate" class="form-control" />
                     </div>
+                    <div class="col-md-3">
+                        <label>Pilih Kelas:</label>
+                        <select id="classFilter" class="form-select">
+                            <option value="">Semua Kelas</option>
+                            @foreach ($grades as $grade)
+                                <option value="{{ $grade->id }}">{{ $grade->grade_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <div class="col-md-2">
                         <button id="filterBtn" class="btn btn-primary w-100">Filter</button>
                     </div>
@@ -153,6 +162,7 @@ var KTDatatablesServerSide = function () {
                 data: function (data) {
                     data.start_date = $('#startDate').val();
                     data.end_date = $('#endDate').val();
+                    data.class_id = $('#classFilter').val();
                     data.params = searchAdvance;
                     data.search = data.search.value;
                 },
@@ -169,7 +179,7 @@ var KTDatatablesServerSide = function () {
                 }
             },
             {
-                targets: 4,
+                targets: 5,
                 data: null,
                 orderable: false,
                 className: 'text-end',
@@ -180,6 +190,15 @@ var KTDatatablesServerSide = function () {
                     } else {
                         return `<span class="badge badge-danger">Belum Ceklis</span>`;
                     }
+                }
+            },
+            {
+                targets: 2,
+                data: null,
+                orderable: false,
+                className: 'text-start',
+                render: function (data, type, row){
+                    return row.kelas;
                 }
             },
             {
@@ -197,7 +216,7 @@ var KTDatatablesServerSide = function () {
         buttons: [
             {
                 extend: 'excelHtml5',
-                title: 'Export Data - {{ ucfirst(Request::segment(2)) }} - ' + new Date().toLocaleDateString(),
+                title: 'Rekap Data Jurnal Harian - ' + new Date().toLocaleDateString(),
                 text: '<i class="fas fa-file-excel"></i> Excel',
                 className: 'btn btn-success me-2'
             }
@@ -210,6 +229,10 @@ var KTDatatablesServerSide = function () {
             initToggleToolbar();
             toggleToolbars();
             if (typeof KTMenu !== 'undefined') KTMenu.createInstances();
+        });
+
+        $('#classFilter').change(function () {
+            dt.ajax.reload();
         });
 
         // 🔹 tombol filter: refresh tabel berdasarkan tanggal

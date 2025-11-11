@@ -12,6 +12,7 @@ class PKMStudentHabitsController extends ApiGlobalController
     public function checkToday(Request $request)
     {
         $user = auth()->user();
+        $student = DB::table('p_k_m_students')->where('user_id', '=', $user->id)->first();
 
         // hanya untuk murid
         if ($user->role != 2) {
@@ -23,9 +24,10 @@ class PKMStudentHabitsController extends ApiGlobalController
 
         // jika user mengirim tanggal tertentu, gunakan itu
         $date = $request->input('date', $today);
+        dd($student);
 
         // cek apakah sudah ada data untuk tanggal tersebut
-        $exists = PKMStudentHabits::where('student_id', $user->id)
+        $exists = PKMStudentHabits::where('student_id', $student->id)
             ->whereDate('date', $date)
             ->exists();
 

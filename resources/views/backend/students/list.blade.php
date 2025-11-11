@@ -49,12 +49,21 @@
                         <label>Sampai Tanggal:</label>
                         <input type="date" id="endDate" class="form-control" />
                     </div>
+                    <div class="col-md-3">
+                        <label>Pilih Kelas:</label>
+                        <select id="classFilter" class="form-select">
+                            <option value="">Semua Kelas</option>
+                            @foreach ($grades as $grade)
+                                <option value="{{ $grade->id }}">{{ $grade->grade_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <div class="col-md-2">
                         <button id="filterBtn" class="btn btn-primary w-100">Filter</button>
                     </div>
-
-                    <!-- 🔹 Container export -->
-                    <div class="col-md-2 {{ auth()->user()->role == 2 ? 'd-none' : '' }}" id="exportContainer"></div>
+                    <div class="col-md-3">
+                        <button id="naikKelasAll" class="btn btn-primary w-100">Naik Kelas All</button>
+                    </div>
 
                     <!-- 🔹 Tombol Add sejajar -->
                     <div class="col-md-6 text-end">
@@ -153,6 +162,7 @@ var KTDatatablesServerSide = function () {
                 data: function (data) {
                     data.start_date = $('#startDate').val();
                     data.end_date = $('#endDate').val();
+                    data.class_id = $('#classFilter').val();
                     data.params = searchAdvance;
                     data.search = data.search.value;
                 },
@@ -203,19 +213,7 @@ var KTDatatablesServerSide = function () {
                 },
             }
         ],
-        // ✅ Tambahkan DOM dan tombol export di sini
-        dom: 'Bfrtip',
-        buttons: [
-            {
-                extend: 'excelHtml5',
-                title: 'Export Data - {{ ucfirst(Request::segment(2)) }} - ' + new Date().toLocaleDateString(),
-                text: '<i class="fas fa-file-excel"></i> Excel',
-                className: 'btn btn-success me-2'
-            }
-        ]
         });
-
-        dt.buttons().container().appendTo('#exportContainer');
 
         dt.on('draw', function () {
             initToggleToolbar();
@@ -223,6 +221,10 @@ var KTDatatablesServerSide = function () {
             if (typeof KTMenu !== 'undefined') KTMenu.createInstances();
 
             handleNaikKelasRows();
+        });
+
+        $('#classFilter').change(function () {
+            dt.ajax.reload();
         });
 
         // 🔹 tombol filter: refresh tabel berdasarkan tanggal
@@ -254,6 +256,80 @@ var KTDatatablesServerSide = function () {
             });
         });
     }
+
+    $('#naikKelasAll').click(function () {
+        handleNaikKelasAll();
+    })
+
+    var handleNaikKelasAll = function () {
+        const naikKelasButtons = document.querySelectorAll('#naikKelasAll');
+
+        naikKelasButtons.forEach(btn => {
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                const url = `{{ url('api/admin/' . Request::segment(2)) }}/naikKelasAll`;
+
+                Swal.fire({
+                    text: "{{ __('Kamu yakin untuk menaikkan Semua murid ? ') }}",
+                    icon: "warning",
+                    showCancelButton: true,
+                    buttonsStyling: false,
+                    confirmButtonText: "{{ __('Ya, Naikkan!') }}",
+                    cancelButtonText: "{{ __('Batal') }}",
+                    customClass: {
+                        confirmButton: "btn fw-bold btn-danger",
+                        cancelButton: "btn fw-bold btn-active-light-primary"
+                    }
+                }).then(function (result) {
+                    if (result.value) {
+                        $.ajax({
+                            url: url,
+                            type: "POST",
+                            headers: {
+                                'Authorization': 'Bearer {{ session('bearer_token') ?? '' }}',
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            data: {
+                                class_id: $('#classFilter').val() || null, // kirim id kelas yg difilter
+                                params: searchAdvance || null,
+                                search: $('#kt_datatable_example_1_filter input').val() || ''
+                            },
+                            success: function (resp) {
+                                Swal.fire({
+                                    text: name + " {{ __('berhasil dinaikkan semua murid ke kelas berikutnya!') }}",
+                                    icon: "success",
+                                    buttonsStyling: false,
+                                    confirmButtonText: "OK",
+                                    customClass: {
+                                        confirmButton: "btn fw-bold btn-primary"
+                                    }
+                                }).then(function () {
+                                    $('#kt_datatable_example_1').DataTable().ajax.reload();
+                                });
+                            },
+                            error: function () {
+                                Swal.fire({
+                                    text: "{{ __('Terjadi kesalahan saat memproses data.') }}",
+                                    icon: "error",
+                                    confirmButtonText: "OK"
+                                });
+                            }
+                        });
+                    } else if (result.dismiss === 'cancel') {
+                        Swal.fire({
+                            text: name + " {{ __('tidak dinaikkan kelas.') }}",
+                            icon: "info",
+                            buttonsStyling: false,
+                            confirmButtonText: "OK",
+                            customClass: {
+                                confirmButton: "btn fw-bold btn-primary"
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    };
 
     var handleNaikKelasRows = function () {
         const naikKelasButtons = document.querySelectorAll('.naik-kelas-btn');
@@ -363,6 +439,7 @@ var KTDatatablesServerSide = function () {
             initDatatable();
             handleSearchDatatable();
             handleNaikKelasRows();
+            handleNaikKelasAll();
         }
     }
 }();

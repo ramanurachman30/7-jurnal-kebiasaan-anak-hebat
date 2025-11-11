@@ -35,10 +35,18 @@ class PKMStudentHabits extends Resources
             'label' => 'Nama Murid',
             'type' => 'select2',
             'options' => [
-                'model' => 'users',       // ✅ sekarang ambil dari tabel users
+                'model' => 'p_k_m_students',       // ✅ sekarang ambil dari tabel users
                 'key' => 'id',
-                'display' => 'name',
+                'display' => 'student_name',
             ],
+            'display' => true,
+        ],
+        [
+            'name' => 'grade_name',
+            'required' => false,
+            'column' => 3,
+            'label' => 'Kelas',
+            'type' => 'text', // readonly / display only
             'display' => true,
         ],
         [
@@ -74,12 +82,13 @@ class PKMStudentHabits extends Resources
 
     protected $reference = [
         'student_id',
+        'student_id.grade',
         'habit_id',
     ];
     public function student_id()
     {
         // ✅ student_id sekarang relasi ke model User
-        return $this->belongsTo(User::class, 'student_id', 'id');
+        return $this->belongsTo(PKMStudents::class, 'student_id');
     }
 
     public function habit_id()
