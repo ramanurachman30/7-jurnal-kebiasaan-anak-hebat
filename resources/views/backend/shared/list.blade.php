@@ -9,7 +9,7 @@
         trash="{{ Auth::allowedUri(Request::segment(2) . '.trash') ? true : false }}">
 @endsection
 
-@section('toolbar')
+{{-- @section('toolbar')
     <a href="{{ url('admin/'. Request::segment(2) . '/trashed') }}" class="btn btn-lg btn-light-youtube">
         <span class="svg-icon svg-icon-danger svg-icon-2">
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
@@ -27,7 +27,7 @@
         </span>
         {{ __('Trash') }}
     </a>
-@endsection
+@endsection --}}
 
 @section('content')
     @php

@@ -10,7 +10,7 @@
         activation="{{ Auth::allowedUri('user.activation') ? true : false }}">
 @endsection
 
-@section('toolbar')
+{{-- @section('toolbar')
     @if (Auth::allowedUri(url('admin/'. Request::segment(2) . '/trashed')))
         <a href="{{ url('admin/'. Request::segment(2) . '/trashed') }}" class="btn btn-lg btn-light-youtube">
             <span class="svg-icon svg-icon-danger svg-icon-2">
@@ -30,7 +30,7 @@
             {{ __('Trash') }}
         </a>
     @endif
-@endsection
+@endsection --}}
 
 @section('content')
     <?php
