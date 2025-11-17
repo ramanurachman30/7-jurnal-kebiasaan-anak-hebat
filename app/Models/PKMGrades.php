@@ -17,7 +17,7 @@ class PKMGrades extends Resources
     protected $rules = [
         'grade_name' => ['required', 'string', 'max:50'],
         'grade_code' => ['required', 'string', 'max:50'],
-        'level_order' => ['required','unique', 'int'],
+        'level_order' => ['required','string', 'int'],
         'description' => ['required', 'string', 'max:50'],
     ];
 

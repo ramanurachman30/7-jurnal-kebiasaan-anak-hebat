@@ -135,6 +135,8 @@ class ComponentController extends Controller
             $response[$q]['text'] = $items->$value;
         }
 
+        // dd($response);
+
         return response(['results' => $response]);
     }
 

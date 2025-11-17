@@ -67,12 +67,12 @@ class RegisteredUserController extends Controller
             // Kalau tidak, biarkan null:
             // 'grade_id' => null,
         ]);
-        // dd($user);
+        
 
         event(new Registered($user));
 
         // Auth::login($user);
 
-        return redirect()->intended(RouteServiceProvider::HOME)->with("success", __('Kamu Berhasil Registrasi') . " " . Auth::user()->name);
+        return back()->with('success', "Kamu Berhasil Registrasi, $user->name");
     }
 }

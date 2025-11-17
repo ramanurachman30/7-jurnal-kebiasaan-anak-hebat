@@ -208,6 +208,20 @@ var KTDatatablesServerSide = function () {
                                     {{ __('Naik Kelas') }}
                                 </a>
                             </div>
+                            @if(Auth::allowedUri(Request::segment(2).'.edit'))
+                                <div class="px-3 menu-item">
+                                    <a href="{{ url('admin/'. Request::segment(2)) }}/${data.id}/edit" class="px-3 menu-link" data-kt-user-table-filter="edit_row">
+                                        {{ __('Edit') }}
+                                    </a>
+                                </div>
+                                @endif
+                            @if(Auth::allowedUri(Request::segment(2).'.trash'))
+                            <div class="px-3 menu-item">
+                                <a data-remote="{{ url('api/admin/'.Request::segment(2)) }}/${data.id}/trashMurid" class="px-3 menu-link" data-kt-user-table-filter="delete_row">
+                                    {{ __('Delete') }}
+                                </a>
+                            </div>
+                            @endif
                         </div>`;
                     return action;
                 },
@@ -221,6 +235,7 @@ var KTDatatablesServerSide = function () {
             if (typeof KTMenu !== 'undefined') KTMenu.createInstances();
 
             handleNaikKelasRows();
+            handleDeleteRows();
         });
 
         $('#classFilter').change(function () {
@@ -254,6 +269,66 @@ var KTDatatablesServerSide = function () {
             c.addEventListener('click', function () {
                 setTimeout(toggleToolbars, 50);
             });
+        });
+    }
+
+    var handleDeleteRows = () => {
+        const deleteButtons = document.querySelectorAll('[data-kt-user-table-filter="delete_row"]');
+
+        deleteButtons.forEach(d => {
+            d.addEventListener('click', function (e) {
+                e.preventDefault();
+                const url = $(this).data('remote');
+                const parent = e.target.closest('tr');
+                const customerName = parent.querySelectorAll('td')[1].innerText;
+
+                Swal.fire({
+                    text: "{{ __('Are you sure want to delete') }} " + customerName + "?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    buttonsStyling: false,
+                    confirmButtonText: "{{ __('Yes') }}, {{ __('delete') }}!",
+                    cancelButtonText: "{{ __('No') }}, {{ __('cancel') }}",
+                    customClass: {
+                        confirmButton: "btn fw-bold btn-danger",
+                        cancelButton: "btn fw-bold btn-active-light-primary"
+                    }
+                }).then(function (result) {
+                    if (result.value) {
+                        $.ajax({
+                            url: url,
+                            type: "POST",
+                            headers: {
+                                'Authorization': 'Bearer {{session('bearer_token')}}',
+                                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                            },
+                            success: function (resp) {
+                                Swal.fire({
+                                    text: "{{ __(ucwords(Request::segment(2))) }} " + "{{ __('Deleted') }}",
+                                    icon: "success",
+                                    buttonsStyling: false,
+                                    confirmButtonText: "{{ __('Yes') }}",
+                                    customClass: {
+                                        confirmButton: "btn fw-bold btn-primary",
+                                    }
+                                }).then(function () {
+                                    dt.draw();
+                                });
+                            }
+                        });
+                    } else if (result.dismiss === 'cancel') {
+                        Swal.fire({
+                            text: customerName + " {{ __('Not deleted') }}.",
+                            icon: "info",
+                            buttonsStyling: false,
+                            confirmButtonText: "{{ __('Yes') }}",
+                            customClass: {
+                                confirmButton: "btn fw-bold btn-primary",
+                            }
+                        });
+                    }
+                });
+            })
         });
     }
 
@@ -440,6 +515,7 @@ var KTDatatablesServerSide = function () {
             handleSearchDatatable();
             handleNaikKelasRows();
             handleNaikKelasAll();
+            handleDeleteRows();
         }
     }
 }();

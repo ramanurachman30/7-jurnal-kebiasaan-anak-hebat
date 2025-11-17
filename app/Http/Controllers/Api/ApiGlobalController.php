@@ -9,6 +9,7 @@ use App\Models\PKMGrades;
 use App\Models\PKMStudentHabits;
 use App\Models\PKMStudents;
 use App\Models\Resources;
+use App\Models\User;
 use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Exception;
@@ -162,6 +163,7 @@ class ApiGlobalController extends Controller
                         'select' => $opt[$value] ?? $value,
                         default => is_string($value) ? strip_tags($value) : $value
                     };
+                    // dd($value);
                 } else {
                     $dataTable[$key][$q] = $value;
                 }
@@ -312,8 +314,15 @@ class ApiGlobalController extends Controller
                 if (isset($forms[$q]) && $forms[$q]['type'] == 'thumbnail') {
                     $dataTable[$key][$q] = $this->thumbnail($value);
                 } elseif (isset($forms[$q]) && $forms[$q]['type'] == 'select2') {
-                    $displayProperty = $forms[$q]['option']['display'];
-                    $dataTable[$key][$q] = !empty($value) ? $value[$displayProperty] : null;
+
+                    $relationName = $q === 'grade_id' ? 'grade' : $q; // otomatis ambil relasinya
+
+                    if (isset($items[$relationName]) && is_array($items[$relationName])) {
+                        $displayProperty = $forms[$q]['option']['display'];
+                        $dataTable[$key][$q] = $items[$relationName][$displayProperty] ?? null;
+                    } else {
+                        $dataTable[$key][$q] = null;
+                    }
                 } elseif (isset($forms[$q]) && $forms[$q]['type'] == 'select') {
                     $dataTable[$key][$q] = !empty($value) && isset($forms[$q]['option'][$value])
                         ? $forms[$q]['option'][$value]
@@ -716,6 +725,22 @@ class ApiGlobalController extends Controller
                 $model = $this->model->findOrFail($selectedId[$i]);
                 $model->delete();
             }
+
+            $data = [
+                'status' => 200
+            ];
+            return response($data);
+        } catch (Exception $th) {
+            return redirect($this->table_name)->withError(Str::title(Str::singular($this->table_name)) . ' failed to delete!');
+        }
+    }
+
+    public function trashMurid(Request $request){
+        try{
+            $murid = PKMStudents::findOrFail($request->id);
+            $user = User::findOrFail($murid->user_id);
+            $user->delete();
+            $murid->delete();
 
             $data = [
                 'status' => 200

@@ -105,34 +105,95 @@ class AppController extends Controller
 
     public function edit(Request $request)
     {
-        $reference = $this->reference;
+        $reference   = $this->reference;
         $breadcrumbs = $this->generateBreadcrumbs($request->segments(), $request->id);
-        $model = $this->model;
+        $model       = $this->model;
 
-        if (count($reference) > 0) {
-            for ($i = 0; $i < count($reference); $i++) {
-                $model = $model->with($reference[$i]);
-            }
+        // Load relations
+        foreach ($reference as $ref) {
+            $model = $model->with($ref);
         }
+
+        // Convert model -> array (relasi ikut masuk)
         $model = $model->findOrFail($request->id)->toArray();
 
         $newForms = [];
-        foreach ($this->forms as $key => $value) {
-            if (isset($model[$value['name']])) {
-                $value['value'] = $model[$value['name']];
-            } else {
-                $value['value'] = null;
+
+        foreach ($this->forms as $key => $form) {
+
+            $field = $form['name'];
+
+            /** ===================================================
+             *            SELECT2 HANDLING (khusus select2)
+             * =================================================== */
+            if (($form['type'] ?? null) === 'select2') {
+
+                $options   = $form['options'];
+                $relation  = $options['model'];   // "users" atau "p_k_m_grades"
+                $keyColumn = $options['key'];     // id
+                $display   = $options['display']; // name / grade_name
+
+                /**
+                 * RELASI YANG SESUAI DIPAKAI ADALAH:
+                 * - user_id  → relasi function: user_id()
+                 * - grade_id → relasi function: grade()
+                 *
+                 * bukan berdasarkan nama tabel, tapi berdasarkan $reference
+                 */
+
+                $relationName = null;
+
+                // cocokkan model->getReference()
+                foreach ($this->reference as $ref) {
+                    // jika relasi ini berisi kolom foreign key yang tepat
+                    if (isset($model[$ref]) && is_array($model[$ref])) {
+                        if (($field === 'user_id'     && $ref === 'user_id') ||
+                            ($field === 'grade_id'    && $ref === 'grade')) 
+                        {
+                            $relationName = $ref;
+                        }
+                    }
+                }
+
+                // Jika data relasi ditemukan
+                if ($relationName && isset($model[$relationName])) {
+
+                    $related = $model[$relationName];
+
+                    $form['value'] = [
+                        $keyColumn => $related[$keyColumn] ?? null,
+                        $display   => $related[$display]   ?? null,
+                    ];
+
+                } else {
+
+                    // fallback jika relasi tidak ditemukan
+                    $form['value'] = [
+                        $keyColumn => $model[$field] ?? null,
+                        $display   => null,
+                    ];
+                }
+
             }
-            $newForms[$key] = $value;
+            /** ===================================================
+             *         FIELD BIASA — tidak boleh array
+             * =================================================== */
+            else {
+
+                $form['value'] = isset($model[$field]) && !is_array($model[$field])
+                    ? $model[$field]
+                    : null;
+            }
+
+            $newForms[$key] = $form;
         }
 
         $this->view = $this->checkView($this->view, 'edit');
-        return $this->view->with(
-            [
-                'forms' => $newForms,
-                'breadcrumbs' => $breadcrumbs
-            ]
-        );
+
+        return $this->view->with([
+            'forms' => $newForms,
+            'breadcrumbs' => $breadcrumbs
+        ]);
     }
 
     public function update(ResourcesRequest $request)

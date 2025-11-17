@@ -26,7 +26,7 @@ class PKMStudents extends Resources
             'name' => 'student_name',
             'required' => true,
             'column' => 3,
-            'label' => 'Student Name',
+            'label' => 'Nama Murid',
             'type' => 'text',
             'display' => true,
         ],
@@ -44,10 +44,10 @@ class PKMStudents extends Resources
             'display' => true,
         ],
         [
-            'name' => 'grade',
+            'name' => 'grade_id',
             'required' => true,
             'column' => 2,
-            'label' => 'Grade',
+            'label' => 'Kelas',
             'type' => 'select2',
             'options' => [
                 'model' => 'p_k_m_grades',

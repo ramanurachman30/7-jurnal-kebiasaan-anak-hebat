@@ -23,8 +23,8 @@ class SysparamSeeder extends Seeder
             ],
             [
                 'groups' => 'Gender',
-                'key' => 'Famale',
-                'value' => 'Famale',
+                'key' => 'Female',
+                'value' => 'Female',
                 'ordering' => '2'
             ],
         ];

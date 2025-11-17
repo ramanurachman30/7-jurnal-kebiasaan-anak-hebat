@@ -71,6 +71,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
         Route::post('/{id}', 'delete')->name('delete');
         Route::post('/{id}/trash', 'trash')->name('trash');
+        Route::post('/{id}/trashMurid', 'trashMurid')->name('trashMurid');
         Route::put('/{id}/restore', 'restore')->name('restore');
         Route::get('/check-slug', 'checkSlug')->name('check-slug');
         Route::get('/{id}', 'detail')->name('detail');

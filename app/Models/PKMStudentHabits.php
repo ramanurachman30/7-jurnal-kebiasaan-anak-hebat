@@ -14,20 +14,28 @@ class PKMStudentHabits extends Resources
     protected $table = 'p_k_m_student_habits';
 
     protected $fillable = [
+        'date',
         'student_id',
         'habit_id',
-        'date',
         'is_checked',
     ];
 
     protected $rules = [
+        'date' => ['required', 'date'],
         'student_id' => ['required', 'integer'],
         'habit_id' => ['required', 'integer'],
-        'date' => ['required', 'date'],
         'is_checked' => ['boolean'],
     ];
 
     protected $forms = [
+        [
+            'name' => 'date',
+            'required' => true,
+            'column' => 3,
+            'label' => 'Tanggal',
+            'type' => 'date',
+            'display' => true,
+        ],
         [
             'name' => 'student_id',
             'required' => true,
@@ -60,14 +68,6 @@ class PKMStudentHabits extends Resources
                 'key' => 'id',
                 'display' => 'habit_name',
             ],
-            'display' => true,
-        ],
-        [
-            'name' => 'date',
-            'required' => true,
-            'column' => 3,
-            'label' => 'Tanggal',
-            'type' => 'date',
             'display' => true,
         ],
         [

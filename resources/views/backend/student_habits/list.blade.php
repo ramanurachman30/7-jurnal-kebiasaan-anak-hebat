@@ -10,7 +10,7 @@
         trash="{{ Auth::allowedUri(Request::segment(2) . '.trash') ? 'true' : 'false' }}">
 @endsection
 
-@section('toolbar')
+{{-- @section('toolbar')
     @if (Auth::allowedUri(url('admin/' . Request::segment(2) . '/trashed')))
         <a href="{{ url('admin/' . Request::segment(2) . '/trashed') }}" class="btn btn-lg btn-light-youtube">
             <span class="svg-icon svg-icon-danger svg-icon-2">
@@ -29,7 +29,7 @@
             {{ __('Trash') }}
         </a>
     @endif
-@endsection
+@endsection --}}
 
 @section('content')
     @php
@@ -49,7 +49,7 @@
                         <label>Sampai Tanggal:</label>
                         <input type="date" id="endDate" class="form-control" />
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3 {{ auth()->user()->role == 2 ? 'd-none' : '' }}">
                         <label>Pilih Kelas:</label>
                         <select id="classFilter" class="form-select">
                             <option value="">Semua Kelas</option>
@@ -140,7 +140,6 @@
 
 var KTDatatablesServerSide = function () {
     var dt;
-    var searchAdvance = [];
 
     var initDatatable = function () {
         dt = $("#kt_datatable_example_1").DataTable({
@@ -163,7 +162,6 @@ var KTDatatablesServerSide = function () {
                     data.start_date = $('#startDate').val();
                     data.end_date = $('#endDate').val();
                     data.class_id = $('#classFilter').val();
-                    data.params = searchAdvance;
                     data.search = data.search.value;
                 },
                 complete: function () {
@@ -193,7 +191,7 @@ var KTDatatablesServerSide = function () {
                 }
             },
             {
-                targets: 2,
+                targets: 3,
                 data: null,
                 orderable: false,
                 className: 'text-start',
@@ -240,6 +238,8 @@ var KTDatatablesServerSide = function () {
             dt.ajax.reload();
         });
 
+        $('.dataTables_filter input').attr('placeholder', 'Cari Nama Murid...');
+
         // Tombol export (opsional)
         $('#exportBtn').click(function () {
             // Kamu bisa tambahkan URL export Excel dengan parameter tanggal di sini
@@ -247,12 +247,6 @@ var KTDatatablesServerSide = function () {
             let end = $('#endDate').val();
             window.location.href = "{{ url('api/admin/' . Request::segment(2) . '/export') }}?start_date=" + start + "&end_date=" + end;
         });
-    }
-
-    var handleSearchDatatable = function () {
-        const filterSearch = document.querySelector('[data-kt-user-table-filter="search"]');
-        if (!filterSearch) return;
-        filterSearch.addEventListener('keyup', e => dt.search(e.target.value).draw());
     }
 
     var initToggleToolbar = function () {
