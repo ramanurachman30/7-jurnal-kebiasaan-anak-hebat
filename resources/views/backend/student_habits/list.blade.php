@@ -184,9 +184,9 @@ var KTDatatablesServerSide = function () {
                 render: function (data, type, row){
                     console.log(row);
                     if (row.is_checked === 1) {
-                        return `<span class="badge badge-success">TerCeklis</span>`;
+                        return `<span class="badge badge-success">Selesai</span>`;
                     } else {
-                        return `<span class="badge badge-danger">Belum Ceklis</span>`;
+                        return `<span class="badge badge-danger">Tidak Selesai</span>`;
                     }
                 }
             },

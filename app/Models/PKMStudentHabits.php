@@ -74,7 +74,7 @@ class PKMStudentHabits extends Resources
             'name' => 'is_checked',
             'required' => false,
             'column' => 2,
-            'label' => 'Ter Ceklis',
+            'label' => 'Status',
             'type' => 'checkbox',
             'display' => true,
         ],
