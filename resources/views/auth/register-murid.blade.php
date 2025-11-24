@@ -20,6 +20,31 @@
             background-position: center;
             background-repeat: no-repeat;
         }
+
+        .custom-select {
+            background-color: transparent !important;
+            color: white !important;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        /* Saat fokus */
+        .custom-select:focus {
+            background-color: transparent !important;
+            color: white !important;
+            border-color: #ffffff !important;
+            box-shadow: none !important;
+        }
+
+        /* Semua option warna putih */
+        .custom-select option {
+            background-color: #1e1e1e; /* agar dropdown bisa terlihat */
+            color: white !important;
+        }
+
+        /* Placeholder grey */
+        .custom-select option[disabled] {
+            color: #cccccc !important;
+        }
     </style>
 </head>
 
@@ -38,17 +63,17 @@
                             </div>
 
                             <div class="mb-3 fv-row form-floating">
-                                <input type="text" name="name" class="form-control bg-transparent" placeholder="Nama Lengkap" value="{{ old('name') }}" required>
+                                <input type="text" name="name" class="form-control bg-transparent text-white" placeholder="Nama Lengkap" value="{{ old('name') }}" required>
                                 <label>Nama Lengkap</label>
                             </div>
 
                             <div class="mb-3 fv-row form-floating">
-                                <input type="text" name="username" class="form-control bg-transparent" placeholder="Username" value="{{ old('username') }}" required>
+                                <input type="text" name="username" class="form-control bg-transparent text-white" placeholder="Username" value="{{ old('username') }}" required>
                                 <label>Username</label>
                             </div>
 
                             <div class="mb-3 fv-row form-floating">
-                                <input type="email" name="email" class="form-control bg-transparent" placeholder="Email" value="{{ old('email') }}" required>
+                                <input type="email" name="email" class="form-control bg-transparent text-white" placeholder="Email" value="{{ old('email') }}" required>
                                 <label>Email</label>
                             </div>
 
@@ -57,7 +82,7 @@
                                     id="gender" 
                                     name="gender" 
                                     required
-                                    class="form-control bg-transparent"
+                                    class="form-select custom-select text-white"
                                 >
                                     <option value="" disabled {{ old('gender') ? '' : 'selected' }}>Pilih Jenis Kelamin</option>
                                     <option value="Male" {{ old('gender') == 'Male' ? 'selected' : '' }}>Laki-Laki</option>
@@ -65,12 +90,13 @@
                                 </select>
                                 <label>Jenis Kelamin</label>
                             </div>
+
                             <div class="mb-3 fv-row form-floating">
                                 <select 
                                     id="grade_id" 
                                     name="grade_id" 
                                     required
-                                    class="form-control bg-transparent"
+                                    class="form-select custom-select text-white"
                                 >
                                     <option value="">Pilih Kelas</option>
                                     @foreach($grades as $grade)
@@ -84,19 +110,19 @@
                                 <textarea 
                                     id="address" 
                                     name="address" 
-                                    class="form-control bg-transparent"
+                                    class="form-control bg-transparent text-white"
                                     rows="3"
                                 >{{ old('address') }}</textarea>
                                 <label>Alamat</label>
                             </div>
 
                             <div class="mb-3 fv-row form-floating">
-                                <input type="text" name="phone_number" class="form-control bg-transparent" placeholder="Nomor Telepon" value="{{ old('phone_number') }}" required>
+                                <input type="text" name="phone_number" class="form-control bg-transparent text-white" placeholder="Nomor Telepon" value="{{ old('phone_number') }}" required>
                                 <label>Nomor Telepon</label>
                             </div>
 
                             <div class="mb-3 fv-row form-floating position-relative">
-                                <input type="password" name="password" id="register_password" class="form-control bg-transparent" placeholder="Password" required>
+                                <input type="password" name="password" id="register_password" class="form-control bg-transparent text-white" placeholder="Password" required>
                                 <label>Kata Sandi</label>
                                 <button type="button"
                                     class="btn btn-sm btn-light position-absolute top-50 end-0 translate-middle-y me-3"
@@ -109,7 +135,7 @@
                             </div>
 
                             <div class="mb-3 fv-row form-floating position-relative">
-                                <input type="password" name="password_confirmation" id="register_password_confirm" class="form-control bg-transparent" placeholder="Konfirmasi Kata Sandi" required>
+                                <input type="password" name="password_confirmation" id="register_password_confirm" class="form-control bg-transparent text-white" placeholder="Konfirmasi Kata Sandi" required>
                                 <label>Konfirmasi Kata Sandi</label>
                             </div>
 
