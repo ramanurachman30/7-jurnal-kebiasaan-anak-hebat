@@ -11,7 +11,7 @@
     <script src="{{ asset('assets/js/custom/theme-handler.js') }}"></script>
     <style>
         body {
-            background-image: url('{{ asset('assets/media/pkm/joanna-kosinska-1_CMoFsPfso-unsplash.jpg') }}');
+            background-image: url('{{ asset('assets/media/pkm/SDNBINTARO 04 PAGI_Nero_AI_Image_Upscaler_Photo_Face.jpeg.jpg') }}');
         }
 
         body, html {
@@ -27,8 +27,8 @@
     <div class="d-flex flex-column flex-root" id="kt_app_root">
         <div class="d-flex flex-column justify-content-center flex-column-fluid flex-lg-row">
             <div class="p-10 d-flex flex-center w-lg-50">
-                <div class="card rounded-3 w-850px w-lg-450px shadow-lg">
-                    <div class="px-12 py-16 px-lg-10 py-lg-10 card-body p-lg-16">
+                <div class="card rounded-3 w-850px w-lg-450px shadow-lg" style="background-color: rgba(255, 255, 255, 0.01); backdrop-filter: blur(10px);">
+                    <div class="px-12 py-16 px-lg-10 py-lg-10 card-body p-lg-16 text-white">
                         <form class="form w-100" method="POST" action="{{ route('register') }}">
                             @csrf
 
@@ -114,13 +114,13 @@
                             </div>
 
                             <div class="mb-10 d-grid">
-                                <button type="submit" class="btn btn-dark py-3 fw-bold">
+                                <button type="submit" class="btn btn-white text-black py-3 fw-bold">
                                     {{ __('Daftar') }}
                                 </button>
                             </div>
 
                             <div class="d-grid text-center">
-                                <a href="{{ route('login') }}" class="underline text-gray-600 hover:text-gray-900">
+                                <a href="{{ route('login') }}" class="underline text-blue-600 hover:text-blue-900">
                                     {{ __('Sudah punya akun? Login di sini') }}
                                 </a>
                             </div>
