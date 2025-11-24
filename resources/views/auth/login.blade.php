@@ -32,8 +32,8 @@
                 </div>
             </div> --}}
             <div class="p-10 d-flex flex-center w-lg-50">
-                <div class="card rounded-3 w-850px w-lg-450px" style="background-color: rgba(255, 255, 255, 0.01); backdrop-filter: blur(10px);">
-                    <div class="px-12 py-16 px-lg-10 py-lg-10 card-body p-lg-16 text-white">
+                <div class="card rounded-3 w-850px w-lg-450px">
+                    <div class="px-12 py-16 px-lg-10 py-lg-10 card-body p-lg-16">
                         @section('form')
                             <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form"
                                 action="{{ route('login') }}" method="POST">
@@ -79,7 +79,7 @@
                                         placeholder="{{ __('Email') }}"
                                         autocomplete="off"
                                         value="{{ old('email') }}"
-                                        class="w-full border border-gray-300 px-5 py-4 text-white rounded-lg"
+                                        class="w-full border border-gray-300 px-5 py-4 rounded-lg"
                                     />
                                 </div>
 
@@ -89,7 +89,7 @@
                                         name="password"
                                         id="login_password" 
                                         placeholder="{{ __('Kata Sandi') }}"
-                                        class="w-full border border-gray-300 px-5 py-4 text-white rounded-lg"
+                                        class="w-full border border-gray-300 px-5 py-4 rounded-lg"
                                     />
 
                                     <button type="button"
@@ -105,7 +105,7 @@
                                 {{-- <div class="g-recaptcha" data-sitekey="6LcQL4IrAAAAAAep9gz_ZY9q9S0VBhf7eM2BCfBy"></div> --}}
                                 <div class="mb-10 d-grid">
                                     <button type="submit" id="kt_sign_in_submit"
-                                        class="sm:px-5 py-4 bg-white text-black rounded-lg!">
+                                        class="sm:px-5 py-4 bg-dark text-white rounded-lg!">
                                         <span class="text-4xl lg:text-lg font-semibold indicator-label">{{ __('Login') }}</span>
                                         <span class="text-4xl lg:text-lg font-semibold indicator-progress">{{ __('Loading') }}...
                                             <span class="align-middle spinner-border spinner-border-sm ms-2"></span></span>

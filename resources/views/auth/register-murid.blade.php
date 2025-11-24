@@ -20,31 +20,6 @@
             background-position: center;
             background-repeat: no-repeat;
         }
-
-        .custom-select {
-            background-color: transparent !important;
-            color: white !important;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-        }
-
-        /* Saat fokus */
-        .custom-select:focus {
-            background-color: transparent !important;
-            color: white !important;
-            border-color: #ffffff !important;
-            box-shadow: none !important;
-        }
-
-        /* Semua option warna putih */
-        .custom-select option {
-            background-color: #1e1e1e; /* agar dropdown bisa terlihat */
-            color: white !important;
-        }
-
-        /* Placeholder grey */
-        .custom-select option[disabled] {
-            color: #cccccc !important;
-        }
     </style>
 </head>
 
@@ -52,8 +27,8 @@
     <div class="d-flex flex-column flex-root" id="kt_app_root">
         <div class="d-flex flex-column justify-content-center flex-column-fluid flex-lg-row">
             <div class="p-10 d-flex flex-center w-lg-50">
-                <div class="card rounded-3 w-850px w-lg-450px shadow-lg" style="background-color: rgba(255, 255, 255, 0.01); backdrop-filter: blur(10px);">
-                    <div class="px-12 py-16 px-lg-10 py-lg-10 card-body p-lg-16 text-white">
+                <div class="card rounded-3 w-850px w-lg-450px shadow-lg">
+                    <div class="px-12 py-16 px-lg-10 py-lg-10 card-body p-lg-16">
                         <form class="form w-100" method="POST" action="{{ route('register') }}">
                             @csrf
 
@@ -63,17 +38,17 @@
                             </div>
 
                             <div class="mb-3 fv-row form-floating">
-                                <input type="text" name="name" class="form-control bg-transparent text-white" placeholder="Nama Lengkap" value="{{ old('name') }}" required>
+                                <input type="text" name="name" class="form-control bg-transparent" placeholder="Nama Lengkap" value="{{ old('name') }}" required>
                                 <label>Nama Lengkap</label>
                             </div>
 
                             <div class="mb-3 fv-row form-floating">
-                                <input type="text" name="username" class="form-control bg-transparent text-white" placeholder="Username" value="{{ old('username') }}" required>
+                                <input type="text" name="username" class="form-control bg-transparent" placeholder="Username" value="{{ old('username') }}" required>
                                 <label>Username</label>
                             </div>
 
                             <div class="mb-3 fv-row form-floating">
-                                <input type="email" name="email" class="form-control bg-transparent text-white" placeholder="Email" value="{{ old('email') }}" required>
+                                <input type="email" name="email" class="form-control bg-transparent" placeholder="Email" value="{{ old('email') }}" required>
                                 <label>Email</label>
                             </div>
 
@@ -82,7 +57,7 @@
                                     id="gender" 
                                     name="gender" 
                                     required
-                                    class="form-select custom-select text-white"
+                                    class="form-control bg-transparent"
                                 >
                                     <option value="" disabled {{ old('gender') ? '' : 'selected' }}>Pilih Jenis Kelamin</option>
                                     <option value="Male" {{ old('gender') == 'Male' ? 'selected' : '' }}>Laki-Laki</option>
@@ -96,7 +71,7 @@
                                     id="grade_id" 
                                     name="grade_id" 
                                     required
-                                    class="form-select custom-select text-white"
+                                    class="form-control bg-transparent"
                                 >
                                     <option value="">Pilih Kelas</option>
                                     @foreach($grades as $grade)
@@ -110,19 +85,19 @@
                                 <textarea 
                                     id="address" 
                                     name="address" 
-                                    class="form-control bg-transparent text-white"
+                                    class="form-control bg-transparent"
                                     rows="3"
                                 >{{ old('address') }}</textarea>
                                 <label>Alamat</label>
                             </div>
 
                             <div class="mb-3 fv-row form-floating">
-                                <input type="text" name="phone_number" class="form-control bg-transparent text-white" placeholder="Nomor Telepon" value="{{ old('phone_number') }}" required>
+                                <input type="text" name="phone_number" class="form-control bg-transparent" placeholder="Nomor Telepon" value="{{ old('phone_number') }}" required>
                                 <label>Nomor Telepon</label>
                             </div>
 
                             <div class="mb-3 fv-row form-floating position-relative">
-                                <input type="password" name="password" id="register_password" class="form-control bg-transparent text-white" placeholder="Password" required>
+                                <input type="password" name="password" id="register_password" class="form-control bg-transparent" placeholder="Password" required>
                                 <label>Kata Sandi</label>
                                 <button type="button"
                                     class="btn btn-sm btn-light position-absolute top-50 end-0 translate-middle-y me-3"
@@ -135,12 +110,12 @@
                             </div>
 
                             <div class="mb-3 fv-row form-floating position-relative">
-                                <input type="password" name="password_confirmation" id="register_password_confirm" class="form-control bg-transparent text-white" placeholder="Konfirmasi Kata Sandi" required>
+                                <input type="password" name="password_confirmation" id="register_password_confirm" class="form-control bg-transparent" placeholder="Konfirmasi Kata Sandi" required>
                                 <label>Konfirmasi Kata Sandi</label>
                             </div>
 
                             <div class="mb-10 d-grid">
-                                <button type="submit" class="btn btn-white text-black py-3 fw-bold">
+                                <button type="submit" class="btn btn-dark text-white py-3 fw-bold">
                                     {{ __('Daftar') }}
                                 </button>
                             </div>
