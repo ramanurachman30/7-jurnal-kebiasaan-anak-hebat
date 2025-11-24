@@ -24,6 +24,7 @@ License: For each use you must have a valid license purchased only from above li
     <meta name="firstsegmenturl" content="{{ request()->segment(2) }}">
     <meta name="urlupload" content="{{ url('api/file_upload') }}">
     <meta name="deletefile" content="{{ url('api/delete_file') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     {{-- <meta http-equiv="Content-Security-Policy" content="form-action 'none'" /> --}}
     @yield('meta')
     <link rel="shortcut icon" href="{{ asset('assets/media/logos/favicon.ico') }}" />
