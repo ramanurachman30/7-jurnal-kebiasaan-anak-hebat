@@ -80,10 +80,11 @@ class UserController extends Controller
 
         $model = $this->model
             ->with('role')
-            ->with('status')
             ->with('gender')
             ->findOrFail($userId)
             ->toArray();
+
+        // dd($model);
 
         if (!$model) abort(404);
 
@@ -178,9 +179,9 @@ class UserController extends Controller
             $model->setAttribute('password', bcrypt($request->password));
             $model->save();
 
-            return redirect('user/reset_password')->with('success', Str::title(Str::singular('users')) . ' updated!');
+            return redirect('admin/user/reset_password')->with('success', Str::title(Str::singular('users')) . ' updated!');
         } catch (Exception $th) {
-            return redirect('user/reset_password')->withError(Str::title(Str::singular('users')) . ' failed to update!');
+            return redirect('admin/user/reset_password')->withError(Str::title(Str::singular('users')) . ' failed to update!');
         }
     }
 
@@ -236,9 +237,9 @@ class UserController extends Controller
 
             $model->save();
 
-            return redirect($this->table_name)->withInput()->with('success', Str::title(Str::singular($this->table_name)) . ' updated!');
+            return redirect('admin/' . $this->table_name)->withInput()->with('success', Str::title(Str::singular($this->table_name)) . ' updated!');
         } catch (Exception $e) {
-            return redirect($this->table_name)->withInput()->withError(Str::title(Str::singular($this->table_name)) . ' failed to update!');
+            return redirect('admin/' . $this->table_name)->withInput()->withError(Str::title(Str::singular($this->table_name)) . ' failed to update!');
         }
     }
 

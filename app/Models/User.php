@@ -110,7 +110,7 @@ class User extends Authenticatable
             'required' => true,
             'column' => 3,
             'label' => 'Role',
-            'type' => 'select2',
+            'type' => 'select2Reference',
             'options' => [
                 'model' => 'roles', // table name
                 'key' => 'id',

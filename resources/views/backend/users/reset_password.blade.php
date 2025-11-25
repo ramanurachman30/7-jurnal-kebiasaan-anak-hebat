@@ -15,7 +15,7 @@
                     <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
                         <div class="d-flex flex-column">
                             <div class="d-flex align-items-center mb-2">
-                                <a href="#" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1">{{ $model['first_name'] . ' ' . $model['last_name']}}</a>
+                                <a href="#" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1">{{ $model['name']}}</a>
                                 <a href="#">
                                     <span class="svg-icon svg-icon-1 svg-icon-primary">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
@@ -118,7 +118,7 @@
             </div>
         </div>
         <div class="card-body p-9">
-            <form action="{{ url('user/update_password') }}" method="POST" id="resetPassword">
+            <form action="{{ url('admin/user/update_password') }}" method="POST" id="resetPassword">
                 @method('PUT')
                 @csrf
                 <div class="form-group row mb-8">

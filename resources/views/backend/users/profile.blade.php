@@ -18,7 +18,7 @@
                             <div class="d-flex flex-column">
                                 <div class="mb-2 d-flex align-items-center">
                                     <a href="#"
-                                        class="text-gray-900 text-hover-primary fs-2 fw-bold me-1">{{ $model['first_name'] . ' ' . $model['last_name'] }}</a>
+                                        class="text-gray-900 text-hover-primary fs-2 fw-bold me-1">{{ $model['name'] }}</a>
                                     <a href="#">
                                         <span class="svg-icon svg-icon-1 svg-icon-primary">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
@@ -129,7 +129,7 @@
                     <label class="col-lg-1 fw-semibold text-muted text-end">{{ __('Full Name') }}</label>
                     <div class="col-lg-8">
                         <span
-                            class="text-gray-800 fw-bold fs-6">{{ $model['first_name'] . ' ' . $model['last_name'] }}</span>
+                            class="text-gray-800 fw-bold fs-6">{{ $model['name'] }}</span>
                     </div>
                 </div>
                 <div class="row mb-7">
@@ -154,12 +154,6 @@
                     <label class="col-lg-1 fw-semibold text-muted text-end">{{ __('Gender') }}</label>
                     <div class="col-lg-8">
                         <span class="text-gray-800 fw-bold fs-6 me-2">{{ $model['gender']['value'] }}</span>
-                    </div>
-                </div>
-                <div class="row mb-7">
-                    <label class="col-lg-1 fw-semibold text-muted text-end">{{ __('Status') }}</label>
-                    <div class="col-lg-8">
-                        <span class="text-gray-800 fw-bold fs-6 me-2">{{ $model['status']['value'] }}</span>
                     </div>
                 </div>
             </div>

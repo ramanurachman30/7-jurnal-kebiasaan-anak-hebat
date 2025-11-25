@@ -250,14 +250,14 @@ var KTDatatablesServerSide = function () {
                 },
                 {
                     targets: -2,
-                    render: function (data) {
+                    render: function (data, type, row) {
                         let color = 'danger';
                         if (data == 'Active') {
                             color = 'success';
                         }
 
                         return `
-                            <span class="badge py-3 px-4 fs-7 badge-light-${color}">${data}</span>
+                            <span class="badge py-3 px-4 fs-7 badge-light-${color}">${row.role ? row.role.name : '-'}</span>
                         `;
                     }
                 },
@@ -267,7 +267,7 @@ var KTDatatablesServerSide = function () {
                     orderable: false,
                     className: 'text-end',
                     render: function (data, type, row) {
-                    console.log(data);
+                    console.log(row.role.name);
                     
                         var action = `
                             <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">

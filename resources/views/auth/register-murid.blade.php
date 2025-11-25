@@ -7,10 +7,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     @vite('resources/css/app.css')
+    @include('metronic/css')
+     <script src="{{ asset('assets/js/custom/theme-handler.js') }}"></script>
 
     <style>
         body {
             background-image: url('{{ asset('assets/media/pkm/SDNBINTARO 04 PAGI_Nero_AI_Image_Upscaler_Photo_Face.jpeg.jpg') }}');
+        }
+
+        body, html {
+            height: 100%;
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -18,175 +24,130 @@
     </style>
 </head>
 
-<body class="min-h-screen flex items-center justify-center p-4">
+<body id="kt_body" class="app-blank bgi-size-cover bgi-position-center bgi-no-repeat">
+    <div class="d-flex flex-column flex-root" id="kt_app_root">
+        <div class="d-flex flex-column justify-content-center flex-column-fluid flex-lg-row">
+            <div class="p-10 d-flex flex-center w-lg-50">
+                <div class="card rounded-3 w-850px w-lg-450px shadow-lg">
+                    <div class="px-12 py-16 px-lg-10 py-lg-10 card-body p-lg-16 ">
+                        <form class="form w-100" method="POST" action="{{ route('register') }}">
+                            @csrf
 
-    <div class="w-full max-w-xl bg-white rounded-2xl shadow-lg p-8">
+                            <div class="mb-6 row justify-content-center text-center">
+                                <img alt="Logo" src="{{ asset('assets/media/pkm/LogoSekolah.jpg') }}" class="w-25 h-25" />
+                                <h1>Daftar</h1>
+                            </div>
 
-        {{-- Logo + Title --}}
-        <div class="flex flex-col items-center mb-8 text-center">
-            <img src="{{ asset('assets/media/pkm/LogoSekolah.jpg') }}"
-                 class="w-24 h-24 rounded-full shadow">
-            <h1 class="text-2xl font-semibold text-gray-900 mt-4">Daftar Akun Baru</h1>
+                            <div class="mb-3 fv-row form-floating">
+                                <input type="text" name="name" class="form-control bg-transparent " placeholder="Nama Lengkap" value="{{ old('name') }}" required>
+                                <label>Nama Lengkap</label>
+                            </div>
+
+                            <div class="mb-3 fv-row form-floating">
+                                <input type="text" name="username" class="form-control bg-transparent " placeholder="Username" value="{{ old('username') }}" required>
+                                <label>Username</label>
+                            </div>
+
+                            <div class="mb-3 fv-row form-floating">
+                                <input type="email" name="email" class="form-control bg-transparent " placeholder="Email" value="{{ old('email') }}" required>
+                                <label>Email</label>
+                            </div>
+
+                            <div class="mb-3 fv-row form-floating">
+                                <select 
+                                    id="gender" 
+                                    name="gender" 
+                                    required
+                                    class="form-select"
+                                >
+                                    <option value="" disabled {{ old('gender') ? '' : 'selected' }}>Pilih Jenis Kelamin</option>
+                                    <option value="Male" {{ old('gender') == 'Male' ? 'selected' : '' }}>Laki-Laki</option>
+                                    <option value="Female" {{ old('gender') == 'Female' ? 'selected' : '' }}>Perempuan</option>
+                                </select>
+                                <label>Jenis Kelamin</label>
+                            </div>
+
+                            <div class="mb-3 fv-row form-floating">
+                                <select 
+                                    id="grade_id" 
+                                    name="grade_id" 
+                                    required
+                                    class="form-select"
+                                >
+                                    <option value="">Pilih Kelas</option>
+                                    @foreach($grades as $grade)
+                                        <option value="{{ $grade->id }}">{{ $grade->grade_name }}</option>
+                                    @endforeach
+                                </select>
+                                <label>Kelas</label>
+                            </div>
+
+                            <div class="mb-3 fv-row form-floating">
+                                <textarea 
+                                    id="address" 
+                                    name="address" 
+                                    class="form-control bg-transparent "
+                                    rows="3"
+                                >{{ old('address') }}</textarea>
+                                <label>Alamat</label>
+                            </div>
+
+                            <div class="mb-3 fv-row form-floating">
+                                <input type="text" name="phone_number" class="form-control bg-transparent " placeholder="Nomor Telepon" value="{{ old('phone_number') }}" required>
+                                <label>Nomor Telepon</label>
+                            </div>
+
+                            <div class="mb-3 fv-row form-floating position-relative">
+                                <input type="password" name="password" id="register_password" class="form-control bg-transparent " placeholder="Password" required>
+                                <label>Kata Sandi</label>
+                                <button type="button"
+                                    class="btn btn-sm btn-light position-absolute top-50 end-0 translate-middle-y me-3"
+                                    style="z-index:2;"
+                                    onclick="togglePassword('register_password', this)" tabindex="-1">
+                                    <span class="svg-icon svg-icon-muted svg-icon-2">
+                                        <i class="bi bi-eye-slash"></i>
+                                    </span>
+                                </button>
+                            </div>
+
+                            <div class="mb-3 fv-row form-floating position-relative">
+                                <input type="password" name="password_confirmation" id="register_password_confirm" class="form-control bg-transparent " placeholder="Konfirmasi Kata Sandi" required>
+                                <label>Konfirmasi Kata Sandi</label>
+                            </div>
+
+                            <div class="mb-10 d-grid">
+                                <button type="submit" class="btn btn-dark text-white py-3 fw-bold">
+                                    {{ __('Daftar') }}
+                                </button>
+                            </div>
+
+                            <div class="d-grid text-center">
+                                <a href="{{ route('login') }}" class="underline text-blue-600 hover:text-blue-900">
+                                    {{ __('Sudah punya akun? Login di sini') }}
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        {{-- Form --}}
-        <form action="{{ route('register') }}" method="POST" class="space-y-5">
-            @csrf
-
-            {{-- Name --}}
-            <div>
-                <input 
-                    type="text"
-                    name="name"
-                    value="{{ old('name') }}"
-                    placeholder="Nama Lengkap"
-                    required
-                    class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring focus:ring-blue-300 bg-white/70 backdrop-blur"
-                >
-            </div>
-
-            {{-- Username --}}
-            <div>
-                <input 
-                    type="text"
-                    name="username"
-                    value="{{ old('username') }}"
-                    placeholder="Username"
-                    required
-                    class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring focus:ring-blue-300 bg-white/70 backdrop-blur"
-                >
-            </div>
-
-            {{-- Email --}}
-            <div>
-                <input 
-                    type="email"
-                    name="email"
-                    value="{{ old('email') }}"
-                    placeholder="Email"
-                    required
-                    class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring focus:ring-blue-300 bg-white/70 backdrop-blur"
-                >
-            </div>
-
-            {{-- Gender --}}
-            <div>
-                <select
-                    name="gender"
-                    required
-                    class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white/70 backdrop-blur focus:ring focus:ring-blue-300"
-                >
-                    <option value="" disabled selected>Pilih Jenis Kelamin</option>
-                    <option value="Male" {{ old('gender') == 'Male' ? 'selected' : '' }}>Laki-Laki</option>
-                    <option value="Female" {{ old('gender') == 'Female' ? 'selected' : '' }}>Perempuan</option>
-                </select>
-            </div>
-
-            {{-- Grade --}}
-            <div>
-                <select
-                    name="grade_id"
-                    required
-                    class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white/70 backdrop-blur focus:ring focus:ring-blue-300"
-                >
-                    <option value="">Pilih Kelas</option>
-                    @foreach ($grades as $grade)
-                        <option value="{{ $grade->id }}">{{ $grade->grade_name }}</option>
-                    @endforeach
-                </select>
-            </div>
-
-            {{-- Address --}}
-            <div>
-                <textarea 
-                    name="address"
-                    rows="3"
-                    placeholder="Alamat"
-                    class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white/70 backdrop-blur focus:ring focus:ring-blue-300"
-                >{{ old('address') }}</textarea>
-            </div>
-
-            {{-- Phone Number --}}
-            <div>
-                <input 
-                    type="text"
-                    name="phone_number"
-                    value="{{ old('phone_number') }}"
-                    placeholder="Nomor Telepon"
-                    required
-                    class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white/70 backdrop-blur focus:ring focus:ring-blue-300"
-                >
-            </div>
-
-            {{-- Password --}}
-            <div class="relative">
-                <input 
-                    type="password"
-                    name="password"
-                    id="password"
-                    placeholder="Kata Sandi"
-                    required
-                    class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white/70 backdrop-blur focus:ring focus:ring-blue-300"
-                >
-                <button 
-                    type="button"
-                    onclick="togglePassword('password')"
-                    class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600"
-                >
-                    👁️
-                </button>
-            </div>
-
-            {{-- Confirm Password --}}
-            <div class="relative">
-                <input 
-                    type="password"
-                    name="password_confirmation"
-                    id="password_confirm"
-                    placeholder="Konfirmasi Kata Sandi"
-                    required
-                    class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white/70 backdrop-blur focus:ring focus:ring-blue-300"
-                >
-                <button 
-                    type="button"
-                    onclick="togglePassword('password_confirm')"
-                    class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600"
-                >
-                    👁️
-                </button>
-            </div>
-
-            {{-- Submit --}}
-            <button 
-                type="submit"
-                class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition"
-            >
-                Daftar
-            </button>
-
-            {{-- Link to Login --}}
-            <p class="text-center mt-2 text-gray-800">
-                Sudah punya akun?
-                <a href="{{ route('login') }}" class="font-semibold text-blue-700 hover:underline">
-                    Login di sini
-                </a>
-            </p>
-        </form>
     </div>
-
-    {{-- Toast --}}
+    @include('metronic/javascript')
     <script>
-        @if ($errors->any())
+        function togglePassword(id, btn) {
+            const input = document.getElementById(id);
+            input.type = input.type === "password" ? "text" : "password";
+        }
+
+        @if (count($errors) > 0)
             @foreach ($errors->all() as $error)
                 toastr.error("{{ $error }}");
             @endforeach
         @endif
 
-        function togglePassword(id) {
-            const input = document.getElementById(id);
-            input.type = input.type === 'password' ? 'text' : 'password';
-        }
+        @if(session('success'))
+            toastr.success("{{ session('success') }}");
+        @endif
     </script>
-
 </body>
 </html>

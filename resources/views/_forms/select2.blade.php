@@ -5,6 +5,7 @@
         data-key="{{ $data['options']['key'] }}"
         data-display="{{ $data['options']['display'] }}"
         data-filter='@json($data["options"]["filter"] ?? [])'
+        data-value='@json($data["value"] ?? null)'   {{-- <— Tambahkan ini --}}
         data-control="select2"
         data-placeholder="{{ __('Select') }} {{ ucwords(str_replace('_', ' ', $data['name'])) }}"
         name="{{ $data['name'] }}"
@@ -15,16 +16,12 @@
             $display = $data['options']['display'];
         @endphp
 
-        {{-- Jika value ada --}}
         @if(!empty($val))
             <option 
                 value="{{ is_array($val) ? ($val[$key] ?? '') : $val }}"
-                selected>
-                {{ 
-                    is_array($val) 
-                        ? ($val[$display] ?? 'Tidak ditemukan') 
-                        : 'Loading...' 
-                }}
+                selected
+            >
+                {{ is_array($val) ? ($val[$display] ?? '') : '' }}
             </option>
         @endif
     </select>
