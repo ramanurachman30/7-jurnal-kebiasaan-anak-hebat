@@ -739,8 +739,12 @@ class ApiGlobalController extends Controller
         try{
             $murid = PKMStudents::findOrFail($request->id);
             $user = User::findOrFail($murid->user_id);
-            $user->delete();
-            $murid->delete();
+            $studentHabits = PKMStudentHabits::where('student_id', $murid->id)->get();
+            foreach ($studentHabits as $item) {
+                $item->forceDelete();
+            }
+            $user->forceDelete();
+            $murid->forceDelete();
 
             $data = [
                 'status' => 200
