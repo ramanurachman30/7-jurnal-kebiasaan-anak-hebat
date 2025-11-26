@@ -43,10 +43,22 @@ class RegisteredUserController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'gender' => ['required', 'string', 'max:255'],
             'address' => ['required', 'string', 'max:255'],
-            'phone_number' => ['required', 'string', 'max:255'],
+            'phone_number' => ['required', 'string', 'max:12'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'grade_id' => ['required', 'integer', 'exists:p_k_m_grades,id'],
         ]);
+
+        if (User::where('username', $request->username)->exists()) {
+            return back()->withErrors(['username' => 'Username sudah digunakan. Silakan pilih username lain.'])->withInput();
+        }
+
+        if (User::where('email', $request->email)->exists()) {
+            return back()->withErrors(['email' => 'Username sudah digunakan. Silakan pilih email lain.'])->withInput();
+        }
+
+        if(strlen($request->phone_number) < 10 || strlen($request->phone_number) > 12){
+            return back()->withErrors(['phone_number' => 'Nomor telepon harus antara 10 hingga 12 digit.'])->withInput();
+        }
 
         $user = User::create([
             'name' => $request->name,

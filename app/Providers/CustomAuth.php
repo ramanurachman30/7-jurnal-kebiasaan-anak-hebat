@@ -56,7 +56,7 @@ class CustomAuth extends SessionGuard
     {
         $image = Auth::user()->photo;
         
-        if (!$image) return asset('assets/media/avatars/300-1.jpg');
+        if (!$image) return asset('assets/media/pkm/LogoSekolah.jpg');
 
         $dataArray = json_decode($image);
         $path = public_path('storage/avatar/') . $dataArray->filename;

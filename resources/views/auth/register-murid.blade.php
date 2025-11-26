@@ -93,7 +93,7 @@
                             </div>
 
                             <div class="mb-3 fv-row form-floating">
-                                <input type="text" name="phone_number" class="form-control bg-transparent " placeholder="Nomor Telepon" value="{{ old('phone_number') }}" required>
+                                <input type="number" name="phone_number" class="form-control bg-transparent " placeholder="Nomor Telepon" value="{{ old('phone_number') }}" required>
                                 <label>Nomor Telepon</label>
                             </div>
 
