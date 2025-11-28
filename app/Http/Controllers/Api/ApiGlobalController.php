@@ -354,6 +354,7 @@ class ApiGlobalController extends Controller
 
             // Ambil data grade sekarang
             $currentGrade = PKMGrades::find($student->grade_id);
+            // dd($currentGrade);
 
             if (!$currentGrade) {
                 return response()->json([

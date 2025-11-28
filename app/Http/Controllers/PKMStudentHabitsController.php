@@ -110,10 +110,10 @@ class PKMStudentHabitsController extends AppController
             // Simpan data jika belum ada
             foreach ($validated['habits'] as $habit_id) {
                 PKMStudentHabits::create([
-                    'student_id' => $validated['student_id'],
+                    'student_id' => $validated['student_id'], // langsung ID PKMStudents
                     'habit_id' => $habit_id,
                     'date' => $validated['date'],
-                    'is_checked' => '1',
+                    'is_checked' => 1,
                 ]);
             }
 

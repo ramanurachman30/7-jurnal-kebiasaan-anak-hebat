@@ -88,7 +88,7 @@ class PKMStudentHabits extends Resources
     public function student_id()
     {
         // ✅ student_id sekarang relasi ke model User
-        return $this->belongsTo(PKMStudents::class, 'student_id');
+        return $this->belongsTo(PKMStudents::class, 'student_id', 'id');
     }
 
     public function habit_id()

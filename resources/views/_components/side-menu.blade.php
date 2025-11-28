@@ -2,19 +2,17 @@
     data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="225px"
     data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
     <div class="px-6 app-sidebar-logo" id="kt_app_sidebar_logo">
-        <div class="row">
-            <div class="col-4">
-                <a href="{{ url('dashboard') }}">
-                    <img alt="Logo" src="{{ asset('assets/media/pkm/LogoSekolah.jpg') }}"
-                        class="w-100 app-sidebar-logo-default theme-light-show">
-                    <img alt="Logo" src="{{ asset('assets/media/pkm/LogoSekolah.jpg') }}"
-                        class="w-100 app-sidebar-logo-default theme-dark-show">
-                    <img alt="Logo" src="{{ asset('assets/media/pkm/LogoSekolah.jpg') }}"
-                        class="h-100 app-sidebar-logo-minimize">
-                </a>
-            </div>
-            <div class="col-8 d-flex align-items-center">
-                <p class="mb-0 fw-bolder">7 Kebiasaan Anak Hebat Indonesia</p>
+        <div class="d-flex align-items-center">
+            <a href="{{ url('admin/dashboard') }}">
+                <img alt="Logo" src="{{ asset('assets/media/pkm/LogoSekolah.jpg') }}"
+                    class="h-40px app-sidebar-logo-default theme-light-show">
+                <img alt="Logo" src="{{ asset('assets/media/pkm/LogoSekolah.jpg') }}"
+                    class="h-40px app-sidebar-logo-default theme-dark-show">
+                <img alt="Logo" src="{{ asset('assets/media/pkm/LogoSekolah.jpg') }}"
+                    class="h-20px app-sidebar-logo-minimize">
+            </a>
+            <div class="ms-2 app-sidebar-logo-default">
+                <p class="mb-0 fw-bolder text-wrapper">7 Kebiasaan Anak Hebat Indonesia</p>
             </div>
         </div>
         <div id="kt_app_sidebar_toggle"

@@ -99,7 +99,7 @@ License: For each use you must have a valid license purchased only from above li
                                         <h1
                                             class="my-0 page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center">
                                             {{ __(ucwords(str_replace('_', ' ', request()->segment(2)))) }}</h1>
-                                        <ul class="pt-1 my-0 breadcrumb breadcrumb-separatorless fw-semibold fs-7">
+                                        {{-- <ul class="pt-1 my-0 breadcrumb breadcrumb-separatorless fw-semibold fs-7">
                                             <li class="breadcrumb-item text-muted">
                                                 <i class="fas fa-home"></i>
                                             </li>
@@ -119,7 +119,7 @@ License: For each use you must have a valid license purchased only from above li
                                                     @endif
                                                 </li>
                                             @endforeach
-                                        </ul>
+                                        </ul> --}}
                                     </div>
                                 @show
                                 @section('toolbar')
